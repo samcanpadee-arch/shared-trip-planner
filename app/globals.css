@@ -1077,3 +1077,143 @@ textarea:focus {
   25% { transform: translateX(-2px); }
   75% { transform: translateX(2px); }
 }
+
+.option-card.disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.pill:disabled,
+input:disabled,
+textarea:disabled,
+.submit-btn:disabled {
+  cursor: not-allowed;
+}
+
+.revote-link {
+  margin-top: 0.7rem;
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  text-decoration: underline;
+  padding: 0;
+  font-size: 0.84rem;
+}
+
+.results-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.voter-chip-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.voter-chip {
+  font-size: 0.7rem;
+  border-radius: 999px;
+  padding: 0.22rem 0.55rem;
+  border: 1px solid #d6ccc1;
+  background: #f5ece6;
+}
+
+.results-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.result-row {
+  border-top: 1px solid #ece4db;
+  padding-top: 0.6rem;
+}
+
+.result-label {
+  text-transform: uppercase;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  color: var(--text-soft);
+  margin-bottom: 0.3rem;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.84rem;
+}
+
+.result-empty {
+  color: var(--text-soft);
+  font-size: 0.82rem;
+}
+
+.skeleton-line {
+  height: 0.85rem;
+  border-radius: 0.35rem;
+  background: linear-gradient(90deg, #f0e8de, #fbf7f2, #f0e8de);
+  background-size: 200% 100%;
+  animation: pulse 1.4s linear infinite;
+}
+
+.skeleton-line.short {
+  width: 65%;
+}
+
+@keyframes pulse {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.mobile-results-wrap {
+  display: none;
+  margin-top: 1rem;
+}
+
+.progress-card li[role='button'] {
+  cursor: pointer;
+}
+
+.standings-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.standings-mini-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.standings-mini-item {
+  border: 1px solid #ede2d7;
+  border-radius: 0.65rem;
+  padding: 0.65rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.standings-mini-item small {
+  color: var(--text-soft);
+}
+
+@media (max-width: 980px) {
+  .mobile-results-wrap {
+    display: block;
+  }
+
+  .sticky-col .results-card {
+    display: none;
+  }
+}
