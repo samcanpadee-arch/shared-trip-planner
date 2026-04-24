@@ -1,6 +1,11 @@
 export default function AccommodationCard({ accommodation }) {
   return (
     <article className="accommodation-card">
+      {accommodation.image ? (
+        <div className="accommodation-image-wrap">
+          <img src={accommodation.image} alt={accommodation.imageAlt || accommodation.name} className="accommodation-image" />
+        </div>
+      ) : null}
       <p className="section-label">{accommodation.label}</p>
       <div className="accommodation-row">
         <h3>{accommodation.name}</h3>

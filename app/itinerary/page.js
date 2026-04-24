@@ -1,19 +1,13 @@
-import Link from 'next/link';
 import { accommodation, bookingStatus, itineraryTimeline } from '../siteData';
 import AccommodationCard from '../components/AccommodationCard';
 import ItineraryTimeline from '../components/ItineraryTimeline';
 import SectionHeader from '../components/SectionHeader';
+import TopNav from '../components/TopNav';
 
 export default function ItineraryPage() {
   return (
     <main className="page-shell itinerary-shell">
-      <div className="main-nav">
-        <h1>Vihan’s Yarra Valley Bucks</h1>
-        <nav>
-          <Link href="/">Vote</Link>
-          <span className="active">Itinerary</span>
-        </nav>
-      </div>
+      <TopNav activeHref="/itinerary" />
 
       <section className="hero-block muted-bg">
         <p className="section-label">Draft — not final yet</p>

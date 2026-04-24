@@ -507,3 +507,258 @@ th {
     font-size: 0.88rem;
   }
 }
+
+.top-app-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  margin: -1.25rem -1.25rem 1.5rem;
+  padding: 0 1.25rem;
+  background: #fdfcf0;
+  border-bottom: 1px solid #e5e0d5;
+}
+
+.top-app-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.top-app-inner h1 {
+  font-size: clamp(1.1rem, 2.6vw, 1.7rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.top-app-inner nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.top-app-inner nav a {
+  text-decoration: none;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid transparent;
+}
+
+.top-app-inner nav a.active,
+.top-app-inner nav a:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.places-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.9rem;
+}
+
+.place-card {
+  background: #fff;
+  border: 1px solid #e5e0d5;
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.place-type {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a6e37;
+  font-size: 0.7rem;
+}
+
+.place-card h3 {
+  font-size: 1.05rem;
+}
+
+.place-card p {
+  color: var(--text-soft);
+}
+
+.place-card a {
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.72rem;
+  width: fit-content;
+}
+
+@media (max-width: 700px) {
+  .top-app-bar {
+    margin: -1rem -0.8rem 1.25rem;
+    padding: 0 0.8rem;
+  }
+
+  .top-app-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Stitch-inspired visual refresh */
+.hero-block {
+  background: linear-gradient(135deg, #fffdf7 0%, #f6eee9 100%);
+  border: 1px solid #e8ddd4;
+}
+
+.hero-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.3rem;
+}
+
+.hero-gallery img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 0.6rem;
+  border: 1px solid #e5d9cf;
+}
+
+.accommodation-image-wrap {
+  margin: -1.25rem -1.25rem 1rem;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.accommodation-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.option-card {
+  background: #fff;
+  border: 1px solid #e6dacf;
+  border-radius: 0.8rem;
+  box-shadow: 0 8px 20px rgba(27, 48, 34, 0.07);
+}
+
+.option-image-wrap {
+  height: 140px;
+  margin: -1rem -1rem 0.2rem;
+  overflow: hidden;
+  border-radius: 0.8rem 0.8rem 0 0;
+}
+
+.option-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.progress-card {
+  border-radius: 0.9rem;
+  border: 1px solid #314e3b;
+}
+
+.profile-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.8rem;
+}
+
+.profile-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+}
+
+.place-image-wrap {
+  margin: -1rem -1rem 0.2rem;
+  height: 170px;
+  overflow: hidden;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.place-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.place-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.place-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(27, 48, 34, 0.12);
+}
+
+@media (max-width: 700px) {
+  .hero-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-gallery img {
+    height: 150px;
+  }
+}
+
+/* Consistent chip/bubble alignment */
+.option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+  gap: 0.7rem;
+}
+
+.option-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  min-height: 2rem;
+}
+
+.option-copy {
+  display: grid;
+  gap: 0.45rem;
+  flex: 1;
+}
+
+.option-vibe {
+  margin-top: auto;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.7rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid #d7cbc3;
+  background: #f3eae5;
+  color: #36423a;
+  white-space: nowrap;
+}
+
+.chip-accent {
+  background: #5b4313;
+  border-color: #5b4313;
+  color: #fff8e7;
+}
