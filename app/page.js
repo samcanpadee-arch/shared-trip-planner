@@ -6,7 +6,6 @@ import { accommodation, votingSections } from './siteData';
 import AccommodationCard from './components/AccommodationCard';
 import OptionCard from './components/OptionCard';
 import ProgressCard from './components/ProgressCard';
-import ResultsCard from './components/ResultsCard';
 import SectionHeader from './components/SectionHeader';
 import TopNav from './components/TopNav';
 import Footer from './components/Footer';
@@ -28,26 +27,12 @@ export default function HomePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState('');
   const [submitAttempted, setSubmitAttempted] = useState(false);
-  const [resultsData, setResultsData] = useState(null);
-  const [resultsLoading, setResultsLoading] = useState(true);
   const [votingLocked, setVotingLocked] = useState(false);
 
   const requiredKeys = useMemo(
     () => ['name', 'fridayNight', 'saturdayMorning', 'saturdayLunch', 'saturdayDrinks', 'saturdayNight', 'sundayRecovery'],
     []
   );
-
-  const optionLookup = useMemo(() => {
-    const lookup = {};
-
-    for (const section of votingSections) {
-      for (const option of section.options) {
-        lookup[option.id] = option.title;
-      }
-    }
-
-    return lookup;
-  }, []);
 
   const disableInputs = status === 'success' && !isEditing;
 
@@ -64,22 +49,6 @@ export default function HomePage() {
     }
   };
 
-  const fetchResults = async () => {
-    try {
-      const response = await fetch('/api/results', { cache: 'no-store' });
-      if (!response.ok) {
-        throw new Error('Failed to load results');
-      }
-
-      const data = await response.json();
-      setResultsData(data);
-    } catch (resultsError) {
-      console.error(resultsError);
-    } finally {
-      setResultsLoading(false);
-    }
-  };
-
   const fetchConfig = async () => {
     try {
       const response = await fetch('/api/admin/config', { cache: 'no-store' });
@@ -92,25 +61,16 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    const votedName = localStorage.getItem('bucks-voted');
-    if (votedName) {
-      setStatus('success');
-      setIsEditing(false);
-      const savedVote = localStorage.getItem('bucks-vote-data');
-      if (savedVote) {
-        try {
-          setForm(JSON.parse(savedVote));
-        } catch {
-          // ignore parse errors
-        }
+    const savedVote = localStorage.getItem('bucks-vote-data');
+    if (savedVote) {
+      try {
+        setForm(JSON.parse(savedVote));
+      } catch {
+        // ignore parse errors
       }
     }
 
-    fetchResults();
     fetchConfig();
-    const interval = setInterval(fetchResults, 30000);
-
-    return () => clearInterval(interval);
   }, []);
 
   const handleSubmit = async (event) => {
@@ -144,9 +104,7 @@ export default function HomePage() {
 
       setStatus('success');
       setIsEditing(false);
-      localStorage.setItem('bucks-voted', form.name.trim().toLowerCase());
       localStorage.setItem('bucks-vote-data', JSON.stringify(form));
-      fetchResults();
     } catch (submitError) {
       console.error(submitError);
       setStatus('idle');
@@ -246,9 +204,14 @@ export default function HomePage() {
                 {error ? <p className="error-message">{error}</p> : null}
               </div>
 
+              <button type="submit" className="submit-btn" disabled={status === 'loading' || disableInputs}>
+                {status === 'loading' ? 'Submitting...' : isEditing ? 'Update votes' : 'Submit votes'}
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </button>
+
               {status === 'success' && !isEditing ? (
-                <section className="success-card inline-success">
-                  <p>✓ You&apos;re in. Votes saved.</p>
+                <section className="inline-success">
+                  <p>Votes saved, {form.name || 'legend'}.</p>
                   <button
                     type="button"
                     className="revote-link"
@@ -261,33 +224,18 @@ export default function HomePage() {
                     Edit your votes
                   </button>
                 </section>
-              ) : (
-                <button type="submit" className="submit-btn" disabled={status === 'loading' || disableInputs}>
-                  {status === 'loading' ? 'Submitting...' : isEditing ? 'Update votes' : 'Submit votes'}
-                  <span className="material-symbols-outlined">arrow_forward</span>
-                </button>
-              )}
+              ) : null}
             </form>
           )}
-
-          {status !== 'success' || isEditing ? (
-            <section className="mobile-results-wrap">
-              <ResultsCard data={resultsData} loading={resultsLoading} optionLookup={optionLookup} />
-            </section>
-          ) : null}
         </div>
 
         <div className="sticky-col">
-          {(status !== 'success' || isEditing) && (votingLocked || (resultsData?.voterCount ?? 0) > 0) ? (
-            <ResultsCard data={resultsData} loading={resultsLoading} optionLookup={optionLookup} />
-          ) : (
-            <ProgressCard
-              form={form}
-              submitAttempted={submitAttempted}
-              requiredKeys={requiredKeys}
-              onJumpToSection={jumpToSection}
-            />
-          )}
+          <ProgressCard
+            form={form}
+            submitAttempted={submitAttempted}
+            requiredKeys={requiredKeys}
+            onJumpToSection={jumpToSection}
+          />
         </div>
       </div>
 
