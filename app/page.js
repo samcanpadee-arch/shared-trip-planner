@@ -80,7 +80,7 @@ export default function HomePage() {
 
     const missing = requiredKeys.filter((key) => !form[key]);
     if (missing.length > 0) {
-      setError('Add your name and vote across each core section before submitting.');
+      setError("You've left some sections blank. We need all of them, even the ones you feel strongly about.");
       jumpToSection(missing[0]);
       return;
     }
@@ -108,7 +108,7 @@ export default function HomePage() {
     } catch (submitError) {
       console.error(submitError);
       setStatus('idle');
-      setError('Could not submit right now. Try again in a minute.');
+      setError('Something broke. Refresh and try again. Sorry.');
     }
   };
 
@@ -119,11 +119,11 @@ export default function HomePage() {
       <div className="layout-grid">
         <div className="content-col">
           <section className="hero-block">
-            <p className="section-label">Trip hub + voting</p>
+            <p className="section-label">The planning website nobody asked for</p>
             <h2>Vihan&apos;s Yarra Valley Bucks Weekend</h2>
-            <p>26-28 June 2026 · Yarra Glen · A very serious planning website for a deeply unserious weekend.</p>
-            <p>Vote on the rough plan now. Once things are locked in, this becomes the trip hub with the final itinerary, accommodation details, booking links, times and notes.</p>
-            <p className="micro-copy">Built because planning manually is painful and procrastination is a powerful drug.</p>
+            <p>26–28 June 2026 · Yarra Glen · A very serious planning website for a deeply unserious weekend.</p>
+            <p>Vote on the rough plan. Once things are locked in, this becomes the trip hub -- itinerary, accommodation details, booking links, the works. Like a Wanderlog but built in a procrastination spiral.</p>
+            <p className="micro-copy">If you&apos;re reading this, Sam finished building it instead of touching grass. Respect the dedication.</p>
             <div className="hero-gallery">
               <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAOtbpPNDunp6x3CIsV00p0feXtMwD09UY3-DPx81Qdpj82fAx09o0q94XyDzk053sFMsJkAsY-C2hCuO8YZzwLz9fuFe1fWUta0a8d7TtLDcboKEcQwKX0GHvbB2IpONF1BIsB1RjSNYzLDaCUwq4ceyA4qb1WDAE7lkS-BG-oi_J1fhLI_ifpTFaNoBqEAaGqHIyLYSG20sm3b9j_BxKxj7vUDMc1XPUg5SKyUy0PJRfjP3Qjvk5GM2vacto0zez_k3FcCfEDf0" alt="Yarra valley estate" />
               <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6zVl9_IxBAVuPnEMbSeodLMBs-bnqy7DivYP9ssvdSwb944tFWxmbpbi27oe6NQDWtK2-3opyA5SjLETQ1KGXV0VVRkAFbBPh12OakncL62B_n51D1HsiJdY9f7bTdSlX4NpzeBmfjl4BqLxU2sDiKbyQGrjuX85xzr0F4rJJ9y3JdUhREMxR5TA1mYoYvnmfQ7Jo2GvC6bWSgr4Zye84JT6sSc2tOv5eCrdBgoOReoULEnZBQMVIweDjT_5OTPOcaCorxvLQYBw" alt="Vineyards" />
@@ -144,7 +144,7 @@ export default function HomePage() {
                 <section className="name-section" id="vote-form">
                   <SectionHeader
                     title="Who are you?"
-                    subtitle="So we know whose questionable opinions these are."
+                    subtitle="Your name. Your one job."
                   />
                   <div className="field-grid">
                     <label>
@@ -152,7 +152,7 @@ export default function HomePage() {
                       <input
                         value={form.name}
                         onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
-                        placeholder="e.g. Dave"
+                        placeholder="First name is fine, Dave"
                         disabled={disableInputs}
                       />
                     </label>
@@ -161,11 +161,11 @@ export default function HomePage() {
                       <input
                         value={form.hardConstraints}
                         onChange={(e) => setForm((prev) => ({ ...prev, hardConstraints: e.target.value }))}
-                        placeholder="Activity suggestions, things to flag, whatever."
+                        placeholder="Allergies, bad ideas, activity suggestions, standing grievances"
                         disabled={disableInputs}
                       />
                     </label>
-                    <p className="field-hint">This will be visible to everyone on the itinerary page.</p>
+                    <p className="field-hint">Visible to everyone on the itinerary page. Choose your words accordingly.</p>
                   </div>
                 </section>
 
@@ -176,16 +176,16 @@ export default function HomePage() {
                         <h3>{section.day}</h3>
                         <p>
                           {section.day === 'Friday'
-                            ? 'The arrival. People will trickle in after work.'
+                            ? 'People are coming from work. Manage expectations. Bring snacks.'
                             : section.day === 'Saturday'
-                              ? "The main event. This is why we're here."
-                              : 'The soft landing. Optional but recommended.'}
+                              ? 'This is the one. The whole trip is basically this day.'
+                              : 'Soft landing. Leave with your dignity mostly intact.'}
                         </p>
                       </div>
                     ) : null}
 
                     <section className="vote-section" id={`section-${section.key}`}>
-                      <SectionHeader icon={section.icon} title={section.title} subtitle={section.subtitle} hint="Pick one" />
+                      <SectionHeader icon={section.icon} title={section.title} subtitle={section.subtitle} hint="Pick one. You can change it later if you have a better idea." />
                       <div className="options-grid">
                         {section.options.map((option) => (
                           <OptionCard
@@ -205,13 +205,14 @@ export default function HomePage() {
               </div>
 
               <button type="submit" className="submit-btn" disabled={status === 'loading' || disableInputs}>
-                {status === 'loading' ? 'Submitting...' : isEditing ? 'Update votes' : 'Submit votes'}
+                {status === 'loading' ? 'Submitting...' : isEditing ? 'Update votes' : 'Lock in my votes'}
                 <span className="material-symbols-outlined">arrow_forward</span>
               </button>
 
               {status === 'success' && !isEditing ? (
                 <section className="inline-success">
-                  <p>Votes saved, {form.name || 'legend'}.</p>
+                  <h3>You&apos;re in, {form.name || 'legend'}.</h3>
+                  <p>Votes saved. The group thanks you for your participation in this extremely democratic process.</p>
                   <button
                     type="button"
                     className="revote-link"
@@ -221,7 +222,7 @@ export default function HomePage() {
                       setSubmitAttempted(false);
                     }}
                   >
-                    Edit your votes
+                    Actually, change something
                   </button>
                 </section>
               ) : null}
