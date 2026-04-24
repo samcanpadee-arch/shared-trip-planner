@@ -35,6 +35,7 @@ export default function HomePage() {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
+  const [submitAttempted, setSubmitAttempted] = useState(false);
 
   const requiredKeys = useMemo(
     () => ['name', 'fridayNight', 'saturdayMorning', 'saturdayLunch', 'saturdayDrinks', 'saturdayNight', 'sundayRecovery', 'budgetComfort'],
@@ -53,10 +54,16 @@ export default function HomePage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
+    setSubmitAttempted(true);
 
     const missing = requiredKeys.filter((key) => !form[key]);
     if (missing.length > 0) {
       setError('Add your name and vote across each core section before submitting.');
+      const firstMissing = missing[0];
+      const el = document.getElementById(`section-${firstMissing}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
       return;
     }
 
@@ -96,6 +103,7 @@ export default function HomePage() {
 
       setStatus('success');
       setForm(initialForm);
+      setSubmitAttempted(false);
     } catch (submitError) {
       console.error(submitError);
       setStatus('idle');
@@ -135,7 +143,7 @@ export default function HomePage() {
           ) : null}
 
           <form id="vote" onSubmit={handleSubmit} className="vote-form">
-            <section className="field-grid">
+            <section className="field-grid" id="section-name">
               <label>
                 Name (identity for public shaming)
                 <input value={form.name} onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))} placeholder="e.g. Dave" />
@@ -159,7 +167,7 @@ export default function HomePage() {
             </section>
 
             {votingSections.map((section) => (
-              <section key={section.key} className="vote-section">
+              <section key={section.key} className="vote-section" id={`section-${section.key}`}>
                 <SectionHeader icon={section.icon} title={section.title} subtitle={section.subtitle} />
                 <div className="options-grid">
                   {section.options.map((option) => (
@@ -174,7 +182,7 @@ export default function HomePage() {
               </section>
             ))}
 
-            <section className="vote-section">
+            <section className="vote-section" id="section-budgetComfort">
               <SectionHeader title="Budget comfort" label="💸" subtitle="Pick your comfort zone" />
               <div className="pill-grid">
                 {budgetOptions.map((option) => (
@@ -231,7 +239,7 @@ export default function HomePage() {
         </div>
 
         <div className="sticky-col">
-          <ProgressCard form={form} />
+          <ProgressCard form={form} submitAttempted={submitAttempted} requiredKeys={requiredKeys} />
         </div>
       </div>
 
