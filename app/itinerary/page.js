@@ -331,7 +331,7 @@ export default function ItineraryPage() {
         />
 
         <div className="split-members">
-          <p className="section-label">Manage group</p>
+          <p className="section-label">Who&apos;s splitting costs?</p>
           <p className="group-members-label">Group members</p>
           <div className="split-toggle">
             <input
@@ -363,8 +363,11 @@ export default function ItineraryPage() {
           <p className="group-members-caption">Click a name to remove them from the group.</p>
         </div>
 
+        <hr className="expense-divider" />
+
         <form className="expense-form" onSubmit={submitExpense}>
-          <div className="expense-grid">
+          <p className="section-label expense-form-label">Add an expense</p>
+          <div className="expense-grid stacked-fields">
             <label>
               Description
               <input
@@ -403,7 +406,7 @@ export default function ItineraryPage() {
             </label>
           </div>
 
-          <div className="split-members">
+          <div className="split-members split-among-block">
             <p className="section-label">Split among</p>
             <div className="split-toggle">
               <button
