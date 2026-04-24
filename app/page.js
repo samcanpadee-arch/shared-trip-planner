@@ -25,6 +25,7 @@ const initialForm = {
 export default function HomePage() {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState('idle');
+  const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState('');
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [resultsData, setResultsData] = useState(null);
@@ -47,7 +48,7 @@ export default function HomePage() {
     return lookup;
   }, []);
 
-  const disableInputs = status === 'success';
+  const disableInputs = status === 'success' && !isEditing;
 
   const selectOption = (key, value) => {
     if (disableInputs) return;
@@ -81,6 +82,7 @@ export default function HomePage() {
     const votedName = localStorage.getItem('bucks-voted');
     if (votedName) {
       setStatus('success');
+      setIsEditing(false);
       const savedVote = localStorage.getItem('bucks-vote-data');
       if (savedVote) {
         try {
@@ -127,6 +129,7 @@ export default function HomePage() {
       }
 
       setStatus('success');
+      setIsEditing(false);
       localStorage.setItem('bucks-voted', form.name.trim().toLowerCase());
       localStorage.setItem('bucks-vote-data', JSON.stringify(form));
       fetchResults();
@@ -169,14 +172,12 @@ export default function HomePage() {
                 type="button"
                 className="revote-link"
                 onClick={() => {
+                  setIsEditing(true);
                   setStatus('idle');
                   setSubmitAttempted(false);
-                  localStorage.removeItem('bucks-voted');
-                  localStorage.removeItem('bucks-vote-data');
-                  setForm(initialForm);
                 }}
               >
-                Changed your mind? Vote again
+                Edit your votes
               </button>
             </section>
           ) : null}
@@ -261,7 +262,7 @@ export default function HomePage() {
             {error ? <p className="error-message">{error}</p> : null}
 
             <button type="submit" className="submit-btn" disabled={status === 'loading' || disableInputs}>
-              {status === 'loading' ? 'Submitting...' : 'Submit votes'}
+              {status === 'loading' ? 'Submitting...' : isEditing ? 'Update votes' : 'Submit votes'}
               {status !== 'loading' ? <span className="material-symbols-outlined">arrow_forward</span> : null}
             </button>
           </form>
