@@ -712,3 +712,53 @@ th {
     height: 150px;
   }
 }
+
+/* Consistent chip/bubble alignment */
+.option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100%;
+  gap: 0.7rem;
+}
+
+.option-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  min-height: 2rem;
+}
+
+.option-copy {
+  display: grid;
+  gap: 0.45rem;
+  flex: 1;
+}
+
+.option-vibe {
+  margin-top: auto;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.7rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid #d7cbc3;
+  background: #f3eae5;
+  color: #36423a;
+  white-space: nowrap;
+}
+
+.chip-accent {
+  background: #5b4313;
+  border-color: #5b4313;
+  color: #fff8e7;
+}
