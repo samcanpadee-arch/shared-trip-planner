@@ -215,3 +215,48 @@ export const bookingStatus = [
   { item: 'Lunch Reservation', status: 'Booked' },
   { item: 'Activity Tickets', status: 'Not booked' }
 ];
+
+export const shortlistPlaces = [
+  {
+    name: 'Luxury Airbnb Estate',
+    type: 'Accommodation',
+    description: "The command centre: fire pit, pool, and enough space to avoid each other's snoring.",
+    linkLabel: 'Airbnb link',
+    link: accommodation.link
+  },
+  {
+    name: 'Yering Station',
+    type: 'Winery',
+    description: "Victoria's first vineyard. Premium Pinot Noir and long-lunch energy.",
+    linkLabel: 'Visit website',
+    link: 'https://www.yering.com/'
+  },
+  {
+    name: 'Four Pillars Distillery',
+    type: 'Spirits',
+    description: 'Mandatory stop for Bloody Shiraz Gin and elite post-lunch banter.',
+    linkLabel: 'Visit website',
+    link: 'https://www.fourpillarsgin.com/'
+  },
+  {
+    name: 'Rochford Wines',
+    type: 'Dinner',
+    description: 'Strong candidate for Saturday dinner with easy group booking options.',
+    linkLabel: 'Visit website',
+    link: 'https://www.rochfordwines.com/'
+  },
+  {
+    name: 'Yarra Valley Grand Hotel',
+    type: 'Pub',
+    description: 'Casual fallback with broad menu coverage and fewer logistical meltdowns.',
+    linkLabel: 'Visit website',
+    link: 'https://www.yarravalleygrand.com.au/'
+  },
+  {
+    name: 'Healesville Sanctuary',
+    type: 'Recovery',
+    description: 'Wholesome Sunday reset before everyone heads home.',
+    linkLabel: 'Visit website',
+    link: 'https://www.zoo.org.au/healesville/'
+  }
+];

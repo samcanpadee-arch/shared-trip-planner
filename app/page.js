@@ -1,7 +1,6 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Link from 'next/link';
 import {
   accommodation,
   budgetOptions,
@@ -14,6 +13,7 @@ import CostGuideTable from './components/CostGuideTable';
 import OptionCard from './components/OptionCard';
 import ProgressCard from './components/ProgressCard';
 import SectionHeader from './components/SectionHeader';
+import TopNav from './components/TopNav';
 
 const initialForm = {
   name: '',
@@ -104,13 +104,7 @@ export default function HomePage() {
 
   return (
     <main className="page-shell">
-      <div className="main-nav">
-        <h1>Vihan’s Yarra Valley Bucks</h1>
-        <nav>
-          <a href="#vote">Vote</a>
-          <Link href="/itinerary">Itinerary</Link>
-        </nav>
-      </div>
+      <TopNav activeHref="/" />
 
       <div className="layout-grid">
         <div className="content-col">
