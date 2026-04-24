@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   accommodation,
   budgetOptions,
@@ -12,6 +12,7 @@ import AccommodationCard from './components/AccommodationCard';
 import CostGuideTable from './components/CostGuideTable';
 import OptionCard from './components/OptionCard';
 import ProgressCard from './components/ProgressCard';
+import ResultsCard from './components/ResultsCard';
 import SectionHeader from './components/SectionHeader';
 import TopNav from './components/TopNav';
 import Footer from './components/Footer';
@@ -36,20 +37,88 @@ export default function HomePage() {
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
   const [submitAttempted, setSubmitAttempted] = useState(false);
+  const [resultsData, setResultsData] = useState(null);
+  const [resultsLoading, setResultsLoading] = useState(true);
 
   const requiredKeys = useMemo(
     () => ['name', 'fridayNight', 'saturdayMorning', 'saturdayLunch', 'saturdayDrinks', 'saturdayNight', 'sundayRecovery', 'budgetComfort'],
     []
   );
 
-  const selectOption = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
+  const optionLookup = useMemo(() => {
+    const lookup = {};
+
+    for (const section of votingSections) {
+      for (const option of section.options) {
+        lookup[option.id] = option.title;
+      }
+    }
+
+    for (const option of budgetOptions) {
+      lookup[option.id] = option.label;
+    }
+
+    return lookup;
+  }, []);
+
+  const disableInputs = status === 'success';
+
+  const selectOption = (key, value) => {
+    if (disableInputs) return;
+    setForm((prev) => ({ ...prev, [key]: value }));
+  };
 
   const toggleHardNo = (value) => {
+    if (disableInputs) return;
+
     setForm((prev) => ({
       ...prev,
       hardNos: prev.hardNos.includes(value) ? prev.hardNos.filter((item) => item !== value) : [...prev.hardNos, value]
     }));
   };
+
+  const jumpToSection = (key) => {
+    const el = document.getElementById(`section-${key}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const fetchResults = async () => {
+    try {
+      const response = await fetch('/api/results', { cache: 'no-store' });
+      if (!response.ok) {
+        throw new Error('Failed to load results');
+      }
+
+      const data = await response.json();
+      setResultsData(data);
+    } catch (resultsError) {
+      console.error(resultsError);
+    } finally {
+      setResultsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const votedName = localStorage.getItem('bucks-voted');
+    if (votedName) {
+      setStatus('success');
+      const savedVote = localStorage.getItem('bucks-vote-data');
+      if (savedVote) {
+        try {
+          setForm(JSON.parse(savedVote));
+        } catch {
+          // ignore parse errors
+        }
+      }
+    }
+
+    fetchResults();
+    const interval = setInterval(fetchResults, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -59,51 +128,31 @@ export default function HomePage() {
     const missing = requiredKeys.filter((key) => !form[key]);
     if (missing.length > 0) {
       setError('Add your name and vote across each core section before submitting.');
-      const firstMissing = missing[0];
-      const el = document.getElementById(`section-${firstMissing}`);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      jumpToSection(missing[0]);
       return;
     }
 
     const payload = {
-      name: form.name,
-      travelNotes: form.travelNotes,
-      hardConstraints: form.hardConstraints,
-      fridayNight: form.fridayNight,
-      saturdayMorning: form.saturdayMorning,
-      saturdayLunch: form.saturdayLunch,
-      saturdayDrinks: form.saturdayDrinks,
-      saturdayNight: form.saturdayNight,
-      sundayRecovery: form.sundayRecovery,
-      budgetComfort: form.budgetComfort,
-      hardNos: form.hardNos,
-      finalComments: form.finalComments,
+      ...form,
       submittedAt: new Date().toISOString()
     };
 
-    const endpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
-
     setStatus('loading');
     try {
-      if (endpoint) {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+      const response = await fetch('/api/vote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
 
-        if (!response.ok) {
-          throw new Error('Submission failed');
-        }
-      } else {
-        console.log('Mock submit payload:', payload);
+      if (!response.ok) {
+        throw new Error('Submission failed');
       }
 
       setStatus('success');
-      setForm(initialForm);
-      setSubmitAttempted(false);
+      localStorage.setItem('bucks-voted', form.name.trim().toLowerCase());
+      localStorage.setItem('bucks-vote-data', JSON.stringify(form));
+      fetchResults();
     } catch (submitError) {
       console.error(submitError);
       setStatus('idle');
@@ -117,7 +166,7 @@ export default function HomePage() {
 
       <div className="layout-grid">
         <div className="content-col">
-                    <section className="hero-block">
+          <section className="hero-block">
             <p className="section-label">Trip hub + voting</p>
             <h2>Vihan&apos;s Yarra Valley Bucks Weekend</h2>
             <p>26-28 June 2026 · Yarra Glen · A very serious planning website for a deeply unserious weekend.</p>
@@ -139,6 +188,25 @@ export default function HomePage() {
                 Legend. Once everyone has voted, the plan will get locked in and this site becomes the final itinerary
                 hub.
               </p>
+              <button
+                type="button"
+                className="revote-link"
+                onClick={() => {
+                  setStatus('idle');
+                  setSubmitAttempted(false);
+                  localStorage.removeItem('bucks-voted');
+                  localStorage.removeItem('bucks-vote-data');
+                  setForm(initialForm);
+                }}
+              >
+                Changed your mind? Vote again
+              </button>
+            </section>
+          ) : null}
+
+          {status === 'success' ? (
+            <section className="mobile-results-wrap">
+              <ResultsCard data={resultsData} loading={resultsLoading} optionLookup={optionLookup} />
             </section>
           ) : null}
 
@@ -146,7 +214,12 @@ export default function HomePage() {
             <section className="field-grid" id="section-name">
               <label>
                 Name (identity for public shaming)
-                <input value={form.name} onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))} placeholder="e.g. Dave" />
+                <input
+                  value={form.name}
+                  onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
+                  placeholder="e.g. Dave"
+                  disabled={disableInputs}
+                />
               </label>
               <label>
                 Travel notes (who are you carpooling with?)
@@ -154,6 +227,7 @@ export default function HomePage() {
                   value={form.travelNotes}
                   onChange={(e) => setForm((prev) => ({ ...prev, travelNotes: e.target.value }))}
                   placeholder="Driving from Northcote..."
+                  disabled={disableInputs}
                 />
               </label>
               <label>
@@ -162,6 +236,7 @@ export default function HomePage() {
                   value={form.hardConstraints}
                   onChange={(e) => setForm((prev) => ({ ...prev, hardConstraints: e.target.value }))}
                   placeholder="No mushrooms, terrified of goats"
+                  disabled={disableInputs}
                 />
               </label>
             </section>
@@ -176,6 +251,7 @@ export default function HomePage() {
                       option={option}
                       isSelected={form[section.key] === option.id}
                       onSelect={() => selectOption(section.key, option.id)}
+                      disabled={disableInputs}
                     />
                   ))}
                 </div>
@@ -191,6 +267,7 @@ export default function HomePage() {
                     key={option.id}
                     className={`pill ${form.budgetComfort === option.id ? 'selected' : ''}`}
                     onClick={() => selectOption('budgetComfort', option.id)}
+                    disabled={disableInputs}
                   >
                     {option.label}
                   </button>
@@ -198,7 +275,7 @@ export default function HomePage() {
               </div>
             </section>
 
-            <section className="vote-section">
+            <section className="vote-section" id="section-hardNos">
               <SectionHeader title="Hard no list" label="🚫" subtitle="Checkbox the things that are absolutely off limits" />
               <div className="pill-grid">
                 {hardNoOptions.map((option) => (
@@ -207,6 +284,7 @@ export default function HomePage() {
                     key={option}
                     className={`pill ${form.hardNos.includes(option) ? 'selected danger' : ''}`}
                     onClick={() => toggleHardNo(option)}
+                    disabled={disableInputs}
                   >
                     {option}
                   </button>
@@ -214,19 +292,20 @@ export default function HomePage() {
               </div>
             </section>
 
-            <section className="vote-section">
+            <section className="vote-section" id="section-finalComments">
               <SectionHeader title="Final comments" label="✍️" subtitle="Last notes before lock-in" />
               <textarea
                 rows={4}
                 value={form.finalComments}
                 onChange={(e) => setForm((prev) => ({ ...prev, finalComments: e.target.value }))}
                 placeholder="Anything else the group should know..."
+                disabled={disableInputs}
               />
             </section>
 
             {error ? <p className="error-message">{error}</p> : null}
 
-            <button type="submit" className="submit-btn" disabled={status === 'loading'}>
+            <button type="submit" className="submit-btn" disabled={status === 'loading' || disableInputs}>
               {status === 'loading' ? 'Submitting...' : 'Submit votes'}
               {status !== 'loading' ? <span className="material-symbols-outlined">arrow_forward</span> : null}
             </button>
@@ -236,10 +315,25 @@ export default function HomePage() {
             <SectionHeader label="Cost" title="Cost guide" subtitle="Indicative only. Not a checkout... Please do not invoice Sam." />
             <CostGuideTable rows={costGuide} />
           </section>
+
+          {status !== 'success' ? (
+            <section className="mobile-results-wrap">
+              <ResultsCard data={resultsData} loading={resultsLoading} optionLookup={optionLookup} />
+            </section>
+          ) : null}
         </div>
 
         <div className="sticky-col">
-          <ProgressCard form={form} submitAttempted={submitAttempted} requiredKeys={requiredKeys} />
+          {status === 'success' || (resultsData?.voterCount ?? 0) > 0 ? (
+            <ResultsCard data={resultsData} loading={resultsLoading} optionLookup={optionLookup} />
+          ) : (
+            <ProgressCard
+              form={form}
+              submitAttempted={submitAttempted}
+              requiredKeys={requiredKeys}
+              onJumpToSection={jumpToSection}
+            />
+          )}
         </div>
       </div>
 

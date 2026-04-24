@@ -1,4 +1,7 @@
-import { accommodation, bookingStatus, essentialsChecklist, itineraryTimeline } from '../siteData';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { accommodation, bookingStatus, essentialsChecklist, itineraryTimeline, votingSections } from '../siteData';
 import AccommodationCard from '../components/AccommodationCard';
 import ItineraryTimeline from '../components/ItineraryTimeline';
 import SectionHeader from '../components/SectionHeader';
@@ -6,6 +9,23 @@ import TopNav from '../components/TopNav';
 import Footer from '../components/Footer';
 
 export default function ItineraryPage() {
+  const [results, setResults] = useState(null);
+
+  useEffect(() => {
+    const loadResults = async () => {
+      try {
+        const response = await fetch('/api/results', { cache: 'no-store' });
+        if (!response.ok) return;
+        const data = await response.json();
+        setResults(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadResults();
+  }, []);
+
   return (
     <main className="page-shell itinerary-shell">
       <TopNav activeHref="/itinerary" />
@@ -34,6 +54,29 @@ export default function ItineraryPage() {
           </ul>
           <p className="fine-print">Pack smart now so Sunday-you doesn&apos;t spiral later.</p>
         </aside>
+      </section>
+
+      <section className="vote-section standings-card">
+        <SectionHeader title="Voting standings" label="Live" icon="leaderboard" subtitle="Quick snapshot of what's leading right now" />
+        {results?.voterCount ? (
+          <div className="standings-mini-grid">
+            {votingSections.slice(0, 3).map((section) => {
+              const entries = Object.entries(results.tally?.[section.key] || {});
+              const [winner, count] = entries.sort((a, b) => b[1] - a[1])[0] || [];
+              const winnerLabel = section.options.find((option) => option.id === winner)?.title || winner;
+
+              return (
+                <article key={section.key} className="standings-mini-item">
+                  <p>{section.title}</p>
+                  <strong>{winnerLabel || 'No picks yet'}</strong>
+                  <small>{count ? `${count} votes` : '0 votes'}</small>
+                </article>
+              );
+            })}
+          </div>
+        ) : (
+          <p>No votes yet. Standings will show once submissions start rolling in.</p>
+        )}
       </section>
 
       <section className="vote-section">
