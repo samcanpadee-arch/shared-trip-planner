@@ -1,88 +1,45 @@
 import Link from 'next/link';
-import { accommodation, finalItinerary, checklist, importantNotes } from '../siteData';
+import { accommodation, bookingStatus, itineraryTimeline } from '../siteData';
+import AccommodationCard from '../components/AccommodationCard';
+import ItineraryTimeline from '../components/ItineraryTimeline';
+import SectionHeader from '../components/SectionHeader';
 
 export default function ItineraryPage() {
   return (
-    <main className="container">
-      <header className="hero card">
-        <p className="badge">Draft — not final yet</p>
-        <h1>Final itinerary</h1>
-        <p className="subtitle">Once votes are in and bookings are locked, this becomes the one link for the weekend.</p>
-        <div className="hero-actions">
-          <Link href="/" className="btn btn-primary">
-            Back to trip hub
-          </Link>
-        </div>
-      </header>
+    <main className="page-shell itinerary-shell">
+      <div className="main-nav">
+        <h1>Vihan’s Yarra Valley Bucks</h1>
+        <nav>
+          <Link href="/">Vote</Link>
+          <span className="active">Itinerary</span>
+        </nav>
+      </div>
 
-      <section className="section">
-        <div className="section-heading">
-          <h2>Base camp accommodation</h2>
-        </div>
-        <article className="card base-camp">
-          <h3>{accommodation.name}</h3>
-          <ul>
-            <li>
-              <strong>Status:</strong> {accommodation.status}
-            </li>
-            <li>
-              <strong>Dates:</strong> {accommodation.dates}
-            </li>
-            <li>
-              <strong>Check-in:</strong> {accommodation.checkIn}
-            </li>
-            <li>
-              <strong>Checkout:</strong> {accommodation.checkout}
-            </li>
-            <li>
-              <strong>Address:</strong> {accommodation.address}
-            </li>
-          </ul>
-          <a href={accommodation.link} target="_blank" rel="noreferrer" className="btn btn-primary">
-            Open Airbnb
-          </a>
-        </article>
+      <section className="hero-block muted-bg">
+        <p className="section-label">Draft — not final yet</p>
+        <h2>Final itinerary</h2>
+        <p>
+          Once the votes are in, this becomes the one link for the weekend. Keep it bookmarked, don&apos;t say I didn&apos;t
+          tell you.
+        </p>
       </section>
 
-      <section className="section">
-        <div className="section-heading">
-          <h2>Weekend timeline</h2>
-        </div>
-        <div className="grid three">
-          {finalItinerary.map((day) => (
-            <article key={day.day} className="card">
-              <h3>{day.day}</h3>
-              <ul>
-                {day.items.map((item) => (
-                  <li key={item} className="timeline-item">
-                    {item}
-                  </li>
-                ))}
-              </ul>
+      <AccommodationCard accommodation={accommodation} />
+
+      <section className="vote-section">
+        <SectionHeader title="Weekend timeline" label="Timeline" />
+        <ItineraryTimeline timeline={itineraryTimeline} />
+      </section>
+
+      <section className="vote-section">
+        <SectionHeader title="Bookings & status" label="Admin-ish" />
+        <div className="booking-grid">
+          {bookingStatus.map((booking) => (
+            <article key={booking.item} className="booking-card">
+              <p>{booking.item}</p>
+              <span className={booking.status === 'Booked' ? 'ok' : 'pending'}>{booking.status}</span>
             </article>
           ))}
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="grid two">
-          <article className="card">
-            <h3>Things to bring</h3>
-            <ul>
-              {checklist.map((item) => (
-                <li key={item}>☐ {item}</li>
-              ))}
-            </ul>
-          </article>
-
-          <article className="card">
-            <h3>Important notes</h3>
-            <ul>
-              {importantNotes.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </article>
         </div>
       </section>
     </main>
