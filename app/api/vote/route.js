@@ -8,8 +8,7 @@ const requiredFields = [
   'saturdayLunch',
   'saturdayDrinks',
   'saturdayNight',
-  'sundayRecovery',
-  'budgetComfort'
+  'sundayRecovery'
 ];
 
 export async function POST(request) {
@@ -23,7 +22,6 @@ export async function POST(request) {
 
     const vote = {
       name: body.name,
-      travelNotes: body.travelNotes || '',
       hardConstraints: body.hardConstraints || '',
       fridayNight: body.fridayNight,
       saturdayMorning: body.saturdayMorning,
@@ -31,8 +29,6 @@ export async function POST(request) {
       saturdayDrinks: body.saturdayDrinks,
       saturdayNight: body.saturdayNight,
       sundayRecovery: body.sundayRecovery,
-      budgetComfort: body.budgetComfort,
-      hardNos: Array.isArray(body.hardNos) ? body.hardNos : [],
       finalComments: body.finalComments || '',
       submittedAt: new Date().toISOString()
     };

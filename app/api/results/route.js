@@ -7,8 +7,7 @@ const tallyCategories = [
   'saturdayLunch',
   'saturdayDrinks',
   'saturdayNight',
-  'sundayRecovery',
-  'budgetComfort'
+  'sundayRecovery'
 ];
 
 export async function GET() {
@@ -30,15 +29,6 @@ export async function GET() {
         const choice = vote?.[category];
         if (choice) {
           tally[category][choice] = (tally[category][choice] || 0) + 1;
-        }
-      }
-    }
-
-    tally.hardNos = {};
-    for (const vote of votes) {
-      if (Array.isArray(vote.hardNos)) {
-        for (const item of vote.hardNos) {
-          tally.hardNos[item] = (tally.hardNos[item] || 0) + 1;
         }
       }
     }
