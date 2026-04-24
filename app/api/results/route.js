@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { kv } from '@vercel/kv';
 
 const tallyCategories = [
   'fridayNight',
@@ -10,24 +11,8 @@ const tallyCategories = [
   'budgetComfort'
 ];
 
-async function getKvClient() {
-  try {
-    const loadKv = new Function('return import("@vercel/kv")');
-    const { kv } = await loadKv();
-    return kv;
-  } catch {
-    return null;
-  }
-}
-
 export async function GET() {
   try {
-    const kv = await getKvClient();
-
-    if (!kv) {
-      return NextResponse.json({ voterCount: 0, voterNames: [], tally: {}, mock: true });
-    }
-
     const voterKeys = await kv.smembers('voters');
 
     if (!voterKeys?.length) {
