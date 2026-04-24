@@ -24,6 +24,9 @@ export default function PlacesPage() {
         <div className="places-grid">
           {shortlistPlaces.map((place) => (
             <article key={place.name} className="place-card">
+              <div className="place-image-wrap">
+                <img src={place.image} alt={place.name} className="place-image" />
+              </div>
               <p className="place-type">{place.type}</p>
               <h3>{place.name}</h3>
               <p>{place.description}</p>
