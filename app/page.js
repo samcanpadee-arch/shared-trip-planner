@@ -55,7 +55,8 @@ export default function HomePage() {
   };
 
   const jumpToSection = (key) => {
-    const el = document.getElementById(`section-${key}`);
+    const sectionId = key === 'name' ? 'vote-form' : `section-${key}`;
+    const el = document.getElementById(sectionId);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -161,7 +162,7 @@ export default function HomePage() {
           <AccommodationCard accommodation={accommodation} />
 
           <form id="vote" onSubmit={handleSubmit} className="vote-form">
-            <section className="name-section" id="section-name">
+            <section className="name-section" id="vote-form">
               <SectionHeader
                 title="Who are you?"
                 subtitle="So we know whose questionable opinions these are."

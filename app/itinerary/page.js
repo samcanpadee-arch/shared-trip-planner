@@ -260,26 +260,45 @@ export default function ItineraryPage() {
       </section>
 
       <section className="vote-section standings-card">
-        <SectionHeader title="Voting standings" label="Live" icon="leaderboard" subtitle="Quick snapshot of what's leading right now" />
-        {results?.voterCount ? (
-          <div className="standings-mini-grid">
-            {votingSections.map((section) => {
-              const entries = Object.entries(results.tally?.[section.key] || {});
-              const [winner, count] = entries.sort((a, b) => b[1] - a[1])[0] || [];
-              const winnerLabel = section.options.find((option) => option.id === winner)?.title || winner;
+        <SectionHeader title="Voting leaderboard" label="Live" icon="leaderboard" subtitle="How each category is stacking up." />
+        <div className="leaderboard-list">
+          {votingSections.map((section) => {
+            const sortedEntries = Object.entries(results?.tally?.[section.key] || {}).sort((a, b) => b[1] - a[1]);
+            const totalVotes = sortedEntries.reduce((sum, [, count]) => sum + count, 0);
 
-              return (
-                <article key={section.key} className="standings-mini-item">
-                  <p>{section.title}</p>
-                  <strong>{winnerLabel || 'No picks yet'}</strong>
-                  <small>{count ? `${count} votes` : '0 votes'}</small>
-                </article>
-              );
-            })}
-          </div>
-        ) : (
-          <p>No votes yet. Standings will show once submissions start rolling in.</p>
-        )}
+            return (
+              <article key={section.key} className="leaderboard-category">
+                <p className="section-label">{section.title}</p>
+                {totalVotes ? (
+                  <div className="leaderboard-options">
+                    {sortedEntries.map(([optionId, count], index) => {
+                      const optionLabel = section.options.find((option) => option.id === optionId)?.title || optionId;
+                      const percentage = Math.round((count / totalVotes) * 100);
+                      const isLeader = index === 0;
+
+                      return (
+                        <div key={optionId} className="leaderboard-option">
+                          <div className="leaderboard-row">
+                            <span>{optionLabel}</span>
+                            <small>
+                              {count} {count === 1 ? 'vote' : 'votes'}
+                            </small>
+                          </div>
+                          <div className="leaderboard-bar-track">
+                            <div className={`leaderboard-bar ${isLeader ? 'leader' : ''}`} style={{ width: `${percentage}%` }} />
+                          </div>
+                          {isLeader ? <span className="leaderboard-rank">🏆</span> : null}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p className="result-empty">No picks yet</p>
+                )}
+              </article>
+            );
+          })}
+        </div>
       </section>
 
       {results?.groupNotes?.length ? (
@@ -310,11 +329,12 @@ export default function ItineraryPage() {
 
         <div className="split-members">
           <p className="section-label">Manage group</p>
+          <p className="group-members-label">Group members</p>
           <div className="split-toggle">
             <input
               value={groupNameInput}
               onChange={(event) => setGroupNameInput(event.target.value)}
-              placeholder="Add a name"
+              placeholder="Type a name and hit Add"
               onKeyDown={(event) => {
                 if (event.key === 'Enter') {
                   event.preventDefault();
@@ -322,21 +342,22 @@ export default function ItineraryPage() {
                 }
               }}
             />
-            <button type="button" className="pill selected" onClick={addCustomName}>
+            <button type="button" className="manage-add-btn" onClick={addCustomName}>
               Add
             </button>
           </div>
           {customNames.length ? (
             <div className="split-chip-grid">
               {customNames.map((name) => (
-                <button type="button" key={name} className="pill" onClick={() => removeCustomName(name)} title="Remove from group">
-                  {name}
+                <button type="button" key={name} className="pill removable-pill" onClick={() => removeCustomName(name)} title="Remove">
+                  {name} ×
                 </button>
               ))}
             </div>
           ) : (
             <p>Add names here if people won't vote but should be included in expenses.</p>
           )}
+          <p className="group-members-caption">Click a name to remove them from the group.</p>
         </div>
 
         <form className="expense-form" onSubmit={submitExpense}>
