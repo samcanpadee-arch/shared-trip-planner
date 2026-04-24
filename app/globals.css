@@ -21,7 +21,7 @@ body {
   margin: 0;
   background: var(--surface);
   color: var(--text);
-  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
 }
 
 h1,
@@ -29,12 +29,21 @@ h2,
 h3,
 h4 {
   margin: 0;
-  font-family: 'Noto Serif', Georgia, serif;
+  font-family: var(--font-serif), 'Noto Serif', Georgia, serif;
   font-weight: 600;
 }
 
 p {
   margin: 0;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.section-icon {
+  font-size: 1.1rem;
+  vertical-align: middle;
 }
 
 .page-shell {
@@ -319,7 +328,7 @@ textarea {
 }
 
 .progress-card h3 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', sans-serif;
   font-size: 1.1rem;
 }
 
@@ -367,7 +376,7 @@ td {
 }
 
 th {
-  font-family: 'Noto Serif', serif;
+  font-family: var(--font-serif), 'Noto Serif', serif;
 }
 
 .itinerary-shell {

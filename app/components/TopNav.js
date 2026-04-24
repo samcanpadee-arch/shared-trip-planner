@@ -2,8 +2,7 @@ import Link from 'next/link';
 
 const tabs = [
   { href: '/', label: 'Vote' },
-  { href: '/itinerary', label: 'Itinerary' },
-  { href: '/places', label: 'Places + Cost' }
+  { href: '/itinerary', label: 'Itinerary' }
 ];
 
 export default function TopNav({ activeHref }) {

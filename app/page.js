@@ -160,7 +160,7 @@ export default function HomePage() {
 
             {votingSections.map((section) => (
               <section key={section.key} className="vote-section">
-                <SectionHeader label={section.icon} title={`${section.title}: ${section.subtitle}`} />
+                <SectionHeader label={<span className="material-symbols-outlined section-icon">{section.icon}</span>} title={`${section.title}: ${section.subtitle}`} />
                 <div className="options-grid">
                   {section.options.map((option) => (
                     <OptionCard
