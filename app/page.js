@@ -170,7 +170,7 @@ export default function HomePage() {
                       <input
                         value={form.hardConstraints}
                         onChange={(e) => setForm((prev) => ({ ...prev, hardConstraints: e.target.value }))}
-                        placeholder="Allergies, bad ideas, activity suggestions, standing grievances"
+                        placeholder="e.g. bad back, arrives at midnight, will cry at clay shooting"
                         disabled={disableInputs}
                       />
                     </label>
@@ -183,13 +183,8 @@ export default function HomePage() {
                     {index === 0 || votingSections[index - 1].day !== section.day ? (
                       <div className="day-divider" aria-hidden="true">
                         <h3>{section.day}</h3>
-                        <p>
-                          {section.day === 'Friday'
-                            ? 'People are coming from work. Manage expectations. Bring snacks.'
-                            : section.day === 'Saturday'
-                              ? "The reason we're all here. Don't blow it before midday."
-                              : 'Soft landing. Leave with your dignity mostly intact.'}
-                        </p>
+                        {section.day === 'Saturday' ? <p>The reason we&apos;re all here. Don&apos;t blow it before midday.</p> : null}
+                        {section.day === 'Sunday' ? <p>Soft landing. Leave with your dignity mostly intact.</p> : null}
                       </div>
                     ) : null}
 
