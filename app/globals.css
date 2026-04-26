@@ -602,18 +602,21 @@ th {
 }
 
 .hero-gallery {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.6rem;
+  display: block;
   margin-top: 0.3rem;
+  background: #fffdf7;
+  border: 1px solid #e5d9cf;
+  border-radius: 0.6rem;
 }
 
 .hero-gallery img {
   width: 100%;
-  height: 130px;
-  object-fit: cover;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
   border-radius: 0.6rem;
-  border: 1px solid #e5d9cf;
+  border: 0;
+  display: block;
 }
 
 .accommodation-image-wrap {
@@ -654,40 +657,9 @@ th {
   border: 1px solid #314e3b;
 }
 
-.profile-row {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  margin-bottom: 0.8rem;
-}
-
-.profile-avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 999px;
-  object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.45);
-}
-
-
-
-
-
 @media (max-width: 700px) {
-  .hero-gallery {
-    grid-template-columns: none;
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 0.5rem;
-    padding-bottom: 0.3rem;
-  }
-
   .hero-gallery img {
-    flex: 0 0 75vw;
-    height: 140px;
-    scroll-snap-align: start;
+    height: auto;
   }
 }
 
@@ -1652,4 +1624,34 @@ textarea:disabled,
   .itinerary-top-grid {
     gap: 0.8rem;
   }
+}
+
+
+.option-thumb {
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  border-radius: var(--radius) var(--radius) 0 0;
+  margin-bottom: 12px;
+}
+
+.option-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.option-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.chip-time {
+  background: #fef3c7;
+  color: #92400e;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
 }

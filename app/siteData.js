@@ -1,15 +1,18 @@
+const thumb = (url) =>
+  `https://api.microlink.io/?url=${encodeURIComponent(url)}&embed=image.url`;
+
 export const accommodation = {
   label: 'Base camp',
   status: 'Locked in ✓',
-  name: 'Yarra Glen Airbnb Estate',
+  name: 'The Meadow -- Yarra Valley Large Entertainer with Spa & Sauna',
   dates: 'June 26 – June 28, 2026',
-  address: 'TBC once shared',
+  address: '13 Symonds Street, Yarra Glen 3775',
   description: "Booked. Everyone ends up here. That's all you need to know for now.",
-  linkLabel: 'See the place',
-  link: 'https://www.airbnb.com.au/rooms/1561866387856977252?source_impression_id=p3_1776992856_P3BRBi61hmW3JbmH',
+  linkLabel: 'Booking.com listing',
+  link: 'https://www.booking.com/hotel/au/the-meadow-yarra-valley-large-entertainer-with-spa-sauna.en-gb.html',
   image:
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuAWOjNCqmZTNLeJ1zl8g2cfwyETsA6rEuKHYT5V2QxA8iX7lmvfZqPNFKMN47SIq9akWxiYWs00tt7C_aWSZxIc3rzgDOP3d8eeJDozHxu5d7MRplHkwSp1Y2QYRmouj3g6BCWjsLjRPmOrqnQ1KCo9awWFQ1cX2IvhN5zzAxYIoT502d-AQH4jrcy9uoGiPjC1Tkh5XiQQ5nMO2osRohSDpZmw8rf8foV410LqiQCg2h2cg3PZh3Cq57G1gO5m9P3N1QPk41oDnoM',
-  imageAlt: 'Luxury countryside Airbnb house in Yarra Valley at sunset'
+    'https://cf.bstatic.com/xdata/images/hotel/max1024x768/782549036.jpg?k=0478c1a20b9fb8d48eb0011566224c9141316799b9b008e43557b7c0b4585f1e&o=',
+  imageAlt: 'The Meadow in Yarra Glen'
 };
 
 export const votingSections = [
@@ -21,47 +24,33 @@ export const votingSections = [
     icon: 'nightlife',
     options: [
       {
-        id: 'friday-pizza-oven',
-        cost: 'Shared grocery cost',
+        id: 'fri-pizza',
         title: 'Pizza oven night',
-        description:
-          'Sam brings the pizza oven, we make pizzas, everyone helps, and nobody gets to stand around doing fake supervision with a beer.',
-        meta: ['Friday evening', 'Flexible', 'Shared grocery cost'],
-        vibe: 'High stakes',
-        image:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuCrH-m34CP_D9VNZKMhnBwjPcte38Qjx4EBE6jckRKWxfxuT6eMdNcgVz_YZV6Ifh2cbqkckhF2nVRmDf1Va0IUjjJs1C4_aYgb79KalscZHwnJG-l53cdeZPyPEtnM7V3B1xF27YtjRJAq8CrLqq3OAaaJrlyvclweDvIbMEYd-Mb1Zrv9LHdmSwNt6vIxX1DNhH6Ow3hcFPXER92f4AAq3kfeUuq82SRCs8E3N0YAVBHZdv7ZGbWTwaNsarDU9gdn2IpA9cfXJgw'
-      },
-      {
-        id: 'friday-bbq',
+        description: 'Sam brings the pizza oven. Everyone actually helps.',
         cost: 'Shared grocery cost',
-        title: 'BBQ / burgers',
-        description: 'Sausages, steaks, reliable. Nobody has to learn anything new.',
-        meta: ['Friday evening', 'Shared grocery cost'],
-        vibe: 'Safe bet'
+        timeConstraint: null,
+        link: null,
+        thumbnail: 'https://tse1.explicit.bing.net/th/id/OIP.t74QJoWjW0wTkYj5tETpEQHaEy?rs=1&pid=ImgDetMain&o=7&rm=3',
       },
       {
-        id: 'friday-grazing',
+        id: 'fri-bbq',
+        title: 'BBQ and burgers',
+        description: 'Classic. No notes.',
         cost: 'Shared grocery cost',
-        title: 'Grazing table and snacks',
-        description: 'Low effort, high reward. Cheese, dips, cured meats, and zero cooking required.',
-        meta: ['Friday evening', 'Shared grocery cost'],
-        vibe: 'Minimal effort'
+        timeConstraint: null,
+        link: null,
+        thumbnail: 'https://tse3.mm.bing.net/th/id/OIP.e9erSNNQrd1vykMyz-igRwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3',
       },
       {
-        id: 'friday-takeaway',
+        id: 'fri-takeaway',
+        title: 'Takeaway',
+        description: 'Order something, eat it, go to sleep.',
         cost: 'Pay individually',
-        title: 'Takeaway / frozen backup',
-        description: 'For when ambition dies on the drive up. No shame, just convenience.',
-        meta: ['Friday evening', 'Pay individually'],
-        vibe: 'Recovery mode'
+        timeConstraint: null,
+        link: null,
+        thumbnail: 'https://static.vecteezy.com/system/resources/previews/060/562/387/non_2x/delicious-asian-takeout-meal-noodles-salad-crispy-chicken-in-boxes-soft-light-blurred-background-free-photo.jpg',
       },
-      {
-        id: 'other',
-        title: 'Something else',
-        description: 'Got a better idea? Drop it here.',
-        cost: null
-      }
-    ]
+    ],
   },
   {
     key: 'saturdayMorning',
@@ -71,86 +60,60 @@ export const votingSections = [
     icon: 'wb_sunny',
     options: [
       {
-        id: 'sat-morning-clay-public',
-        cost: '~$80.50 pp',
+        id: 'sat-am-clay-public',
         title: 'Clay shooting (public session)',
-        description:
-          'Melbourne Gun Club, Yering. Zero alcohol beforehand. Photo ID required. Closed shoes. No camo or singlets. Fun option, cursed start time.',
-        meta: ['Arrive 8:45am', '1-1.5 hrs', 'Approx. $80.50 pp'],
-        vibe: 'Early but worth it',
+        description: 'Melbourne Gun Club in Yering. Walk-up session. Zero alcohol beforehand, closed shoes, no camo.',
+        cost: '~$80.50 pp',
+        timeConstraint: 'Arrive 8:45am sharp -- no exceptions',
         link: 'https://www.melbournegunclub.com/come-and-try/',
-        image:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuBN1zmxIa2-q4tW-XEuA-xtRA-31WJ_OdR00pgLEyQlNMD82gdI80E01MvXiq-Uhl3N2Zb7T6JiTxFrn9HxeFO6wdTO3xJFUeWmqcfD4W9CiflxixaRNu7c-KUe_Bgnmf5t6XQZMw6mHlRhVWjeanMk-Ji1CJHbgy_vt4-cTt798X495_60OVclDXqjxu1mOKkCvd7xAJP-zSVHwCo8MU0V8Q7efpFOUVsVOvqTd77hGqMbW4PiPJlSjKbjVz_JAq7cMHHfif4jvfQ'
+        thumbnail: thumb('https://www.melbournegunclub.com/come-and-try/'),
       },
       {
-        id: 'sat-morning-clay-private',
-        cost: '~$165 pp',
-        title: 'Clay shooting (private session)',
-        description: 'Same venue, but booked just for us. Time is flexible, price is higher, ego damage is the same.',
-        meta: ['Time by enquiry', 'Approx. $165 pp'],
-        vibe: 'Premium chaos',
-        link: 'https://www.melbournegunclub.com/corporate-and-social-events-copy/'
+        id: 'sat-am-minigolf',
+        title: 'Mini golf and driving range',
+        description: 'Maroondah Golf Park. Open from 9am. Mix and match -- mini golf, range bays, or both.',
+        cost: '$14-$29 pp depending on activity',
+        timeConstraint: null,
+        link: 'https://www.maroondahgolfpark.com.au/',
+        thumbnail: 'https://images.squarespace-cdn.com/content/v1/658e5e5805acd37df4c4cf0a/b309544e-05d2-4f79-9c17-7f6249ce895c/YARRARANGESTOURISM1.jpeg?format=1000w',
       },
       {
-        id: 'sat-morning-paintball',
-        cost: '~$55-$155 pp',
-        title: 'Paintball',
-        description: 'Bruises and brotherhood. Mostly just bruises though.',
-        meta: ['9:00am or 1:00pm', 'Approx. $55-$155 pp'],
-        vibe: 'Likely to result in a fine',
-        link: 'https://paintballgames.com.au/play-now/'
-      },
-      {
-        id: 'sat-morning-minigolf',
-        cost: '~$19-$29 pp',
-        title: 'Mini golf / driving range',
-        description: 'Low intensity, high trash talk potential. Good for easing into the day.',
-        meta: ['Open 9am-10pm', 'Approx. $19-$29 mini golf', '$14-$19 range'],
-        vibe: 'Casual kings',
-        link: 'https://www.maroondahgolfpark.com.au/'
-      },
-      {
-        id: 'sat-morning-chill',
-        cost: 'Free-ish',
-        title: 'Chill morning at Airbnb',
-        description: 'Sleep in, coffee, do nothing productive. Protect the energy for later.',
-        meta: ['Flexible', 'Free-ish'],
-        vibe: 'Recovery mode'
-      },
-      {
-        id: 'sat-morning-walk',
+        id: 'sat-am-chill',
+        title: 'Chill morning and sleep in',
+        description: 'We are going to be hungover. This is a legitimate option.',
         cost: 'Free',
-        title: 'Short walk / nature reset',
-        description: '20 to 60 minutes of pretending to be outdoorsy before the drinking starts.',
-        meta: ['20-60 mins', 'Free'],
-        vibe: 'Wholesome detour',
-        link: 'https://www.visityarravalley.com.au/blog/walks-you-can-do-in-an-hour-in-the-yarra-valley'
+        timeConstraint: null,
+        link: null,
+        thumbnail: 'https://tse3.mm.bing.net/th/id/OIP.2LYjVcmAzMwNUCZfAMJlfAHaEk?rs=1&pid=ImgDetMain&o=7&rm=3',
       },
       {
-        id: 'sat-morning-donna-buang',
+        id: 'sat-am-walk',
+        title: 'Short walk -- Badger Weir',
+        description: 'Badger Weir Picnic Area near Healesville. Easy 2.5km loop through mountain ash forest. No gear required.',
         cost: 'Free',
-        title: 'Mt Donna Buang / Rainforest Gallery',
-        description: 'Elevated walkway through ancient rainforest. Looks incredible in winter. Free and genuinely cool.',
-        meta: ['Flexible', 'Free'],
-        vibe: 'Nature break',
-        link: 'https://www.parks.vic.gov.au/places-to-see/parks/yarra-ranges-national-park'
+        timeConstraint: null,
+        link: 'https://www.parks.vic.gov.au/places-to-see/sites/badger-weir-picnic-area',
+        thumbnail: thumb('https://www.parks.vic.gov.au/places-to-see/sites/badger-weir-picnic-area'),
       },
       {
-        id: 'sat-morning-archery',
-        cost: '~$45 pp',
-        title: 'Archery',
-        description: 'Channel your inner medieval energy. Group sessions available by enquiry.',
-        meta: ['Time by enquiry', 'From approx. $45 pp'],
-        vibe: 'Wildcard',
-        link: 'https://yvap.com.au/corporate/'
+        id: 'sat-am-donna-buang',
+        title: 'Mt Donna Buang and Rainforest Gallery',
+        description: 'Short drive from Yarra Glen. Rainforest boardwalk, lookout tower, misty trees. Requires no effort.',
+        cost: 'Free',
+        timeConstraint: null,
+        link: 'https://www.parks.vic.gov.au/places-to-see/parks/yarra-ranges-national-park',
+        thumbnail: thumb('https://www.parks.vic.gov.au/places-to-see/parks/yarra-ranges-national-park'),
       },
       {
-        id: 'other',
-        title: 'Something else',
-        description: 'Got a better idea? Drop it here.',
-        cost: null
-      }
-    ]
+        id: 'sat-am-tennis',
+        title: 'Yarra Glen Tennis Club',
+        description: 'There are courts nearby. You need to bring your own racquets and balls -- this does not appear by magic.',
+        cost: 'Free or minimal court fee',
+        timeConstraint: 'BYO gear -- racquets and balls',
+        link: 'https://play.tennis.com.au/yarraglentennisclub',
+        thumbnail: 'https://play.tennis.com.au/Library/yarraglentennisclub?command=Proxy&type=Images&currentFolder=%2f&fileName=Court+Hire+Photo.jpg&thumbnail=Court+Hire+Photo__427x320.jpg&cache=31536000',
+      },
+    ],
   },
   {
     key: 'saturdayLunch',
@@ -161,76 +124,50 @@ export const votingSections = [
     options: [
       {
         id: 'sat-lunch-yering',
-        cost: '~$15-$35 pp tastings',
         title: 'Yering Station',
-        description: 'Big vineyard energy, polished long lunch, great Pinot options.',
-        meta: ['Approx. $15-$35 pp tastings'],
-        vibe: 'Sophisticated sipping',
+        description: 'Iconic Yarra Valley estate. Cellar door tastings and restaurant on site.',
+        cost: '~$15-$35 pp tastings',
+        timeConstraint: null,
         link: 'https://www.yering.com/visit-us/cellar-door/',
-        image:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuD6zVl9_IxBAVuPnEMbSeodLMBs-bnqy7DivYP9ssvdSwb944tFWxmbpbi27oe6NQDWtK2-3opyA5SjLETQ1KGXV0VVRkAFbBPh12OakncL62B_n51D1HsiJdY9f7bTdSlX4NpzeBmfjl4BqLxU2sDiKbyQGrjuX85xzr0F4rJJ9y3JdUhREMxR5TA1mYoYvnmfQ7Jo2GvC6bWSgr4Zye84JT6sSc2tOv5eCrdBgoOReoULEnZBQMVIweDjT_5OTPOcaCorxvLQYBw'
+        thumbnail: 'https://www.yering.com/wp-content/uploads/960x800-50-50-Content-Tasting-Bar.jpg.webp',
       },
       {
         id: 'sat-lunch-rochford',
-        cost: '~$15-$25 pp tastings',
         title: 'Rochford Wines',
-        description: 'Set menu approach and fewer choices for chaos management.',
-        meta: ['Approx. $15-$25 pp tastings'],
-        vibe: 'Premium lock-in',
-        link: 'https://rochfordwines.com.au/yarra-valley-cellar-door'
+        description: 'Large cellar door with outdoor seating. Good food, live music on weekends.',
+        cost: '~$15-$25 pp tastings',
+        timeConstraint: null,
+        link: 'https://rochfordwines.com.au/yarra-valley-cellar-door',
+        thumbnail: 'https://rochfordwines.com.au/img/cellar-door-1.jpg',
       },
       {
         id: 'sat-lunch-chandon',
-        cost: '~$22 pp tasting',
         title: 'Chandon',
-        description: 'Bubbles and views. Pure sophistication before the night descends into chaos.',
-        meta: ['Approx. $22 pp tasting'],
-        vibe: 'Bubbly energy',
-        link: 'https://www.chandon.com.au/Experiences'
+        description: 'The sparkling wine place. Structured tasting experience. Worth it if you like bubbles.',
+        cost: '~$22 pp tasting',
+        timeConstraint: 'Bookings recommended',
+        link: 'https://www.chandon.com.au/Experiences',
+        thumbnail: 'https://www.chandon.com.au/assets/images/contentblock/photos/750x500TastingBar.png',
       },
       {
         id: 'sat-lunch-oakridge',
-        cost: 'Group pricing on enquiry',
         title: 'Oakridge Wines',
-        description: 'Award-winning food, serious cellar door. Good for a group that can behave for 90 minutes.',
-        meta: ['Enquire for group pricing'],
-        vibe: 'Refined choice',
-        link: 'https://oakridgewines.com.au/cellar-door/'
+        description: 'More refined end of the spectrum. Good if the group wants a sit-down experience.',
+        cost: 'Enquire for group pricing',
+        timeConstraint: null,
+        link: 'https://oakridgewines.com.au/cellar-door/',
+        thumbnail: thumb('https://oakridgewines.com.au/cellar-door/'),
       },
       {
         id: 'sat-lunch-debortoli',
+        title: 'De Bortoli -- Locale restaurant',
+        description: 'Full restaurant experience on the estate. Better for a proper lunch than a tasting crawl.',
         cost: 'Restaurant pricing',
-        title: 'De Bortoli Locale',
-        description: 'Restaurant with cheese room. The cheese room alone justifies the trip.',
-        meta: ['Restaurant pricing / group enquiry'],
-        vibe: 'Cheese believers',
-        link: 'https://www.debortoli.com.au/visit-us/restaurants/locale-restaurant-yarra-valley'
+        timeConstraint: 'Booking required for groups',
+        link: 'https://www.debortoli.com.au/visit-us/restaurants/locale-restaurant-yarra-valley',
+        thumbnail: thumb('https://www.debortoli.com.au/visit-us/restaurants/locale-restaurant-yarra-valley'),
       },
-      {
-        id: 'sat-lunch-hubert',
-        cost: 'Restaurant pricing',
-        title: 'Hubert Estate / Quarters',
-        description: 'Modern and sleek. Good food, good wine, slightly more grown-up energy.',
-        meta: ['Restaurant pricing / group enquiry'],
-        vibe: 'Grown-up energy',
-        link: 'https://hubertestate.com.au/quarters-dining/'
-      },
-      {
-        id: 'sat-lunch-grand-hotel',
-        cost: 'Pay individually',
-        title: 'Yarra Valley Grand Hotel',
-        description: 'Pub classics, less ceremony, easier for all tastes. Pay individually.',
-        meta: ['Pay individually'],
-        vibe: 'Casual kings',
-        link: 'https://yarravalleygrand.com.au/'
-      },
-      {
-        id: 'other',
-        title: 'Something else',
-        description: 'Got a better idea? Drop it here.',
-        cost: null
-      }
-    ]
+    ],
   },
   {
     key: 'saturdayDrinks',
@@ -240,57 +177,51 @@ export const votingSections = [
     icon: 'liquor',
     options: [
       {
-        id: 'sat-drinks-four-pillars',
-        cost: '~$50 pp',
+        id: 'sat-arvo-fourpillars',
         title: 'Four Pillars Gin',
-        description: 'The legendary Bloody Shiraz gin awaits. Approx 55 min session, hourly from 12pm weekends.',
-        meta: ['Approx. 55 mins', 'Approx. $50 pp'],
-        vibe: 'Deep vibes only',
+        description: 'Healesville distillery. Guided tasting experience, about 55 mins. Hourly sessions from 12pm on weekends.',
+        cost: '~$50 pp',
+        timeConstraint: 'Hourly sessions -- needs to be booked in advance',
         link: 'https://fourpillarsgin.com/pages/visit-our-distillery',
-        image:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDLLpHdOLMWrQqUL_l-lL6jzKxBmolYD14UoCVc9phlOzNgSuUpjAa2meMacN46VZoS6rW2QCt-yRl31bh_EVoL8DyZ2rtQRn2OQcZyNa-Xp6t_KLroVSa_CpdQZ6CK0MruG-6O1ZiYjxwK_WsmyIe-KQ_oLmUy0GYrXMclewnNTNqPpNbrx57N86oZandc_pTvV5TfP-CeLHA_rdVvSFqm-qsJrxUqI-AnCDyj72DNdZq63FY_LBPozjFmfRr2qQ8ttLCnUB56OZQ'
+        thumbnail: 'https://fourpillarsgin.com/cdn/shop/files/FPGSignage_hdavison_3275_10a1d187-784a-459c-a07c-b44023634e5f.webp?v=1703199456&width=750',
       },
       {
-        id: 'sat-drinks-watts',
-        cost: 'Pay as you go',
+        id: 'sat-arvo-watts',
         title: 'Watts River Brewing',
-        description: 'Craft beers, outdoor tables, very acceptable afternoon pivot.',
-        meta: ['Flexible', 'Pay as you go'],
-        vibe: 'Casual kings',
-        link: 'https://wattsriverbrewing.com.au/'
-      },
-      {
-        id: 'sat-drinks-st-ronans',
+        description: 'Local craft brewery in Healesville. Walk in, order beers, sit outside. No structure required.',
         cost: 'Pay as you go',
-        title: "St Ronan's Cider",
-        description: 'Cider and perries for the beer-averse. Relaxed vibe, easy afternoon stop.',
-        meta: ['Flexible', 'Pay as you go'],
-        vibe: 'Chill option',
-        link: 'https://www.visitvictoria.com/regions/yarra-valley-and-dandenong-ranges/eat-and-drink/breweries-and-distilleries/cideries/st-ronans-cider'
+        timeConstraint: null,
+        link: 'https://wattsriverbrewing.com.au/',
+        thumbnail: thumb('https://wattsriverbrewing.com.au/'),
       },
       {
-        id: 'sat-drinks-more-wineries',
-        cost: 'Varies',
+        id: 'sat-arvo-winery',
         title: 'More winery tastings',
-        description: 'Keep the wine train rolling. Hit another cellar door or two before dinner.',
-        meta: ['Flexible', 'Varies'],
-        vibe: 'Committed to the cause'
+        description: 'Continue from whichever winery we did at lunch. Or hit a second one.',
+        cost: 'Depends on venue',
+        timeConstraint: null,
+        link: null,
+        thumbnail: 'https://rochfordwines.com.au/img/winemaking-the-fruit.jpg',
       },
       {
-        id: 'sat-drinks-airbnb',
+        id: 'sat-arvo-donna-buang',
+        title: 'Mt Donna Buang and Rainforest Gallery',
+        description: 'If we skipped it in the morning, this still works in the afternoon.',
         cost: 'Free',
-        title: 'Back to Airbnb earlier',
-        description: 'Regroup at base camp. Saves money, saves energy, saves face.',
-        meta: ['Flexible', 'Free'],
-        vibe: 'Recovery mode'
+        timeConstraint: null,
+        link: 'https://www.parks.vic.gov.au/places-to-see/parks/yarra-ranges-national-park',
+        thumbnail: thumb('https://www.parks.vic.gov.au/places-to-see/parks/yarra-ranges-national-park'),
       },
       {
-        id: 'other',
-        title: 'Something else',
-        description: 'Got a better idea? Drop it here.',
-        cost: null
-      }
-    ]
+        id: 'sat-arvo-minigolf',
+        title: 'Mini golf and driving range',
+        description: 'Maroondah Golf Park. Works as an afternoon option too.',
+        cost: '$14-$29 pp depending on activity',
+        timeConstraint: null,
+        link: 'https://www.maroondahgolfpark.com.au/',
+        thumbnail: thumb('https://www.maroondahgolfpark.com.au/'),
+      },
+    ],
   },
   {
     key: 'saturdayNight',
@@ -300,57 +231,42 @@ export const votingSections = [
     icon: 'local_bar',
     options: [
       {
-        id: 'sat-night-bbq',
-        cost: 'Shared grocery cost',
-        title: 'BBQ dinner',
-        description: 'Back at base camp. Fire up the barbie, keep it simple, keep it loud.',
-        meta: ['Evening', 'Shared grocery cost'],
-        vibe: 'Classic'
-      },
-      {
         id: 'sat-night-pizza',
+        title: 'Pizza oven night',
+        description: 'Only valid if we did BBQ on Friday. Same deal -- everyone helps, nobody supervises from a distance with a beer.',
         cost: 'Shared grocery cost',
-        title: 'Pizza oven round two',
-        description:
-          'Pizza oven round two only works if people help. This is a group weekend, not a one-man restaurant.',
-        meta: ['Evening', 'Shared grocery cost'],
-        vibe: 'High stakes (again)',
-        image:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuCrH-m34CP_D9VNZKMhnBwjPcte38Qjx4EBE6jckRKWxfxuT6eMdNcgVz_YZV6Ifh2cbqkckhF2nVRmDf1Va0IUjjJs1C4_aYgb79KalscZHwnJG-l53cdeZPyPEtnM7V3B1xF27YtjRJAq8CrLqq3OAaaJrlyvclweDvIbMEYd-Mb1Zrv9LHdmSwNt6vIxX1DNhH6Ow3hcFPXER92f4AAq3kfeUuq82SRCs8E3N0YAVBHZdv7ZGbWTwaNsarDU9gdn2IpA9cfXJgw'
-      },
-      {
-        id: 'sat-night-catered',
-        cost: 'Pricing on enquiry',
-        title: 'Catered / private chef',
-        description: 'Someone else cooks, we just eat. Premium option but zero effort required.',
-        meta: ['Evening', 'Enquire for pricing'],
-        vibe: 'Premium plan'
-      },
-      {
-        id: 'sat-night-takeaway',
-        cost: 'Pay individually',
-        title: 'Big takeaway order',
-        description: 'Order everything. Eat on the couch. No judgement zone.',
-        meta: ['Evening', 'Pay individually'],
-        vibe: 'Zero effort'
+        timeConstraint: null,
+        link: null,
+        thumbnail: null,
       },
       {
         id: 'sat-night-pub',
+        title: 'Pub or restaurant dinner',
+        description: 'Yarra Valley Grand or similar. Sit down, order from a menu, let someone else cook.',
         cost: 'Pay individually',
-        title: 'Pub / restaurant dinner',
-        description: 'Head out to a venue. More structured, easier for fussy eaters.',
-        meta: ['Evening', 'Pay individually'],
-        vibe: 'Night out',
-        image:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDELENszvK8vbg4vXPD_ei24zwcphcQXXc7skWuGTbxPRULixL9cyf3EFQIEQlUGeo5vEd_XlVbUNa6kvKTW9gVRi_xKV2cvt2MHxhqiotv8FHj_ekbFwG9GXfhTdGdO8dIiOxB3c19jbixMZSSCbF4mmXUtBvwCSAQLtxd1OnJKmAjeL6kuBXCyUzlCSoc8JNjGQB2qS6KeeIH3Z6x54w6mO9nqN001OB1GapQe82Cwuhq8hvAPqEW_lmpK6-Mre-ku3J6CvlYT-w'
+        timeConstraint: null,
+        link: 'https://yarravalleygrand.com.au/',
+        thumbnail: 'https://yarravalleygrand.com.au/wp-content/uploads/2024/11/Yarra-Valley-Grand-Hotel-HT-12th-March_GRIFFIN-SIMM_Finals_111-1-1290x570.jpg',
       },
       {
-        id: 'other',
-        title: 'Something else',
-        description: 'Got a better idea? Drop it here.',
-        cost: null
-      }
-    ]
+        id: 'sat-night-bbq',
+        title: 'BBQ at the Airbnb',
+        description: 'Simple, low effort, no logistics. Grill things, eat things.',
+        cost: 'Shared grocery cost',
+        timeConstraint: null,
+        link: null,
+        thumbnail: 'https://tse3.mm.bing.net/th/id/OIP.e9erSNNQrd1vykMyz-igRwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3',
+      },
+      {
+        id: 'sat-night-takeaway',
+        title: 'Big takeaway order',
+        description: 'Order a lot of food. Eat it on the couch.',
+        cost: 'Pay individually or split',
+        timeConstraint: null,
+        link: null,
+        thumbnail: 'https://static.vecteezy.com/system/resources/previews/060/562/387/non_2x/delicious-asian-takeout-meal-noodles-salad-crispy-chicken-in-boxes-soft-light-blurred-background-free-photo.jpg',
+      },
+    ],
   },
   {
     key: 'sundayRecovery',
@@ -361,65 +277,60 @@ export const votingSections = [
     options: [
       {
         id: 'sun-chocolaterie',
-        cost: 'Free / ~$4 tasting',
         title: 'Yarra Valley Chocolaterie',
-        description: 'Free entry, optional tasting for $4. Sugar fixes everything.',
-        meta: ['Usually 9am-5pm', 'Free entry', 'Optional $4 tasting'],
-        vibe: 'Sugar hit',
-        link: 'https://www.yvci.com.au/'
+        description: 'Free entry, optional tasting. Good hangover food decision.',
+        cost: 'Free entry, ~$4 tasting',
+        timeConstraint: null,
+        link: 'https://www.yvci.com.au/',
+        thumbnail: thumb('https://www.yvci.com.au/'),
       },
       {
-        id: 'sun-sanctuary',
-        cost: '~$54.50 pp',
-        title: 'Healesville Sanctuary',
-        description: 'Wholesome animal reset before heading home. Platypus viewing is genuinely great.',
-        meta: ['Usually 9am-5pm', 'From approx. $54.50 pp'],
-        vibe: 'Nature break',
-        link: 'https://www.zoo.org.au/healesville/',
-        image:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuD_c1XucOuTnd28YfwCe_ivREUyV5FNlTUVStCcNHhbx7lf6G3j9rUydUkEhRo2MOKhDG_G0ixvcdh0zW4q5Q7Qr9Q8XjrpaD-yIczUr2gOp5HR8BUqAnIJqtNH_ubmI_b-Ok-wDv4Lldiq2Ps-vWIXgs_RbwEEPtoIm-H-raaAMvXPuEcTZR3qwXnShTW8YuqsH8d1U_NeCVD3KBhlIIiwKlZYcC6IK0j7cN9WzY_ltjZUb4anlI2xuWbyl1zMuZBDAptsjdJoC5Y'
-      },
-      {
-        id: 'sun-walk',
+        id: 'sun-donna-buang',
+        title: 'Mt Donna Buang and Rainforest Gallery',
+        description: 'Good final activity before driving home. Peaceful, low effort.',
         cost: 'Free',
-        title: 'Short nature walk',
-        description: 'Fresh air, mild exertion, questionable motivation.',
-        meta: ['Flexible', 'Free'],
-        vibe: 'Wholesome detour'
-      },
-      {
-        id: 'sun-pub-lunch',
-        cost: 'Pay individually',
-        title: 'Pub / winery lunch',
-        description: 'One more meal out before reality returns.',
-        meta: ['Flexible', 'Pay individually'],
-        vibe: 'Last hurrah'
+        timeConstraint: null,
+        link: 'https://www.parks.vic.gov.au/places-to-see/parks/yarra-ranges-national-park',
+        thumbnail: thumb('https://www.parks.vic.gov.au/places-to-see/parks/yarra-ranges-national-park'),
       },
       {
         id: 'sun-minigolf',
-        cost: '~$19-$29 pp',
-        title: 'Mini golf / driving range',
-        description: 'Low stakes, high trash talk. Good Sunday energy.',
-        meta: ['Open 9am-10pm', 'Approx. $19-$29'],
-        vibe: 'Casual kings',
-        link: 'https://www.maroondahgolfpark.com.au/'
+        title: 'Mini golf and driving range',
+        description: 'Maroondah Golf Park. Gentle, competitive, hungover-friendly.',
+        cost: '$14-$29 pp depending on activity',
+        timeConstraint: null,
+        link: 'https://www.maroondahgolfpark.com.au/',
+        thumbnail: 'https://images.squarespace-cdn.com/content/v1/658e5e5805acd37df4c4cf0a/b309544e-05d2-4f79-9c17-7f6249ce895c/YARRARANGESTOURISM1.jpeg?format=1000w',
+      },
+      {
+        id: 'sun-tennis',
+        title: 'Yarra Glen Tennis Club',
+        description: 'BYO racquets and balls. Not provided. This is a very specific reminder.',
+        cost: 'Free or minimal court fee',
+        timeConstraint: 'BYO gear -- racquets and balls',
+        link: 'https://play.tennis.com.au/yarraglentennisclub',
+        thumbnail: 'https://play.tennis.com.au/Library/yarraglentennisclub?command=Proxy&type=Images&currentFolder=%2f&fileName=Court+Hire+Photo.jpg&thumbnail=Court+Hire+Photo__427x320.jpg&cache=31536000',
+      },
+      {
+        id: 'sun-healesville',
+        title: 'Healesville Sanctuary',
+        description: 'Australian wildlife park. Wombats, platypus, eagles. Worth it if nobody has been.',
+        cost: '~$54.50 pp',
+        timeConstraint: 'Opens 9am, allow 2-3 hours',
+        link: 'https://www.zoo.org.au/healesville/',
+        thumbnail: thumb('https://www.zoo.org.au/healesville/'),
       },
       {
         id: 'sun-leave-early',
-        cost: '',
         title: 'Leave early',
-        description: 'Skip the fanfare and reclaim Sunday afternoon. No judgement.',
-        meta: ['Anytime'],
-        vibe: 'Quiet exit'
+        description: 'Respectable. No shame.',
+        cost: 'Free',
+        timeConstraint: null,
+        link: null,
+        thumbnail: 'https://i.imgflip.com/6l39ya.jpg',
       },
-      {
-        id: 'other',
-        title: 'Something else',
-        description: 'Got a better idea? Drop it here.',
-        cost: null
-      }
-    ]
-  }
+    ],
+  },
 ];
 
 export const itineraryTimeline = [
