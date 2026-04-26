@@ -30,7 +30,7 @@ export const votingSections = [
         cost: 'Shared grocery cost',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://tse1.explicit.bing.net/th/id/OIP.t74QJoWjW0wTkYj5tETpEQHaEy?rs=1&pid=ImgDetMain&o=7&rm=3',
+        thumbnail: null,
       },
       {
         id: 'fri-bbq',
@@ -39,7 +39,7 @@ export const votingSections = [
         cost: 'Shared grocery cost',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://tse3.mm.bing.net/th/id/OIP.e9erSNNQrd1vykMyz-igRwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3',
+        thumbnail: null,
       },
       {
         id: 'fri-takeaway',
@@ -48,7 +48,7 @@ export const votingSections = [
         cost: 'Pay individually',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://static.vecteezy.com/system/resources/previews/060/562/387/non_2x/delicious-asian-takeout-meal-noodles-salad-crispy-chicken-in-boxes-soft-light-blurred-background-free-photo.jpg',
+        thumbnail: null,
       },
       {
         id: 'other',
@@ -93,7 +93,7 @@ export const votingSections = [
         cost: 'Free',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://tse3.mm.bing.net/th/id/OIP.2LYjVcmAzMwNUCZfAMJlfAHaEk?rs=1&pid=ImgDetMain&o=7&rm=3',
+        thumbnail: null,
       },
       {
         id: 'sat-am-walk',
@@ -291,7 +291,7 @@ export const votingSections = [
         cost: 'Shared grocery cost',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://tse3.mm.bing.net/th/id/OIP.e9erSNNQrd1vykMyz-igRwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3',
+        thumbnail: null,
       },
       {
         id: 'sat-night-takeaway',
@@ -300,7 +300,7 @@ export const votingSections = [
         cost: 'Pay individually or split',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://static.vecteezy.com/system/resources/previews/060/562/387/non_2x/delicious-asian-takeout-meal-noodles-salad-crispy-chicken-in-boxes-soft-light-blurred-background-free-photo.jpg',
+        thumbnail: null,
       },
       {
         id: 'other',
@@ -345,7 +345,7 @@ export const votingSections = [
         cost: '$14-$29 pp depending on activity',
         timeConstraint: null,
         link: 'https://www.maroondahgolfpark.com.au/',
-        thumbnail: 'https://images.squarespace-cdn.com/content/v1/658e5e5805acd37df4c4cf0a/b309544e-05d2-4f79-9c17-7f6249ce895c/YARRARANGESTOURISM1.jpeg?format=1000w',
+        thumbnail: thumb('https://www.maroondahgolfpark.com.au/'),
       },
       {
         id: 'sun-tennis',
@@ -372,7 +372,7 @@ export const votingSections = [
         cost: 'Free',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://i.imgflip.com/6l39ya.jpg',
+        thumbnail: null,
       },
       {
         id: 'other',
