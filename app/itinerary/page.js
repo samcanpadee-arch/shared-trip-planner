@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { accommodation, essentialsChecklist, itineraryTimeline, votingSections } from '../siteData';
 import AccommodationCard from '../components/AccommodationCard';
+import ExpenseForm from '../components/ExpenseForm';
 import ItineraryTimeline from '../components/ItineraryTimeline';
 import SectionHeader from '../components/SectionHeader';
 import TopNav from '../components/TopNav';
@@ -11,23 +12,13 @@ import Footer from '../components/Footer';
 export default function ItineraryPage() {
   const [results, setResults] = useState(null);
   const [expenses, setExpenses] = useState([]);
-  const [customNames, setCustomNames] = useState([]);
-  const [groupNameInput, setGroupNameInput] = useState('');
+  const [editingExpense, setEditingExpense] = useState(null);
   const [expensesLoading, setExpensesLoading] = useState(true);
   const [expenseError, setExpenseError] = useState('');
-  const [splitMode, setSplitMode] = useState('everyone');
-  const [expenseForm, setExpenseForm] = useState({
-    id: '',
-    description: '',
-    amount: '',
-    paidBy: '',
-    splitAmong: [],
-    splitType: 'equal'
-  });
 
   const participantNames = Array.from(
     new Map(
-      [...(results?.voterNames || []), ...customNames, ...expenses.flatMap((expense) => [expense.paidBy, ...(expense.splitAmong || [])])]
+      [...(results?.voterNames || []), ...expenses.flatMap((expense) => [expense.paidBy, ...(expense.splitAmong || [])])]
         .filter(Boolean)
         .map((name) => [name.trim().toLowerCase(), name.trim()])
     ).values()
@@ -78,23 +69,6 @@ export default function ItineraryPage() {
   })();
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('expense-names');
-      const parsed = saved ? JSON.parse(saved) : [];
-      if (Array.isArray(parsed)) {
-        const normalized = parsed
-          .filter((name) => typeof name === 'string')
-          .map((name) => name.trim())
-          .filter(Boolean);
-        setCustomNames(normalized);
-      }
-    } catch (error) {
-      console.error('Could not parse saved expense names:', error);
-      setCustomNames([]);
-    }
-  }, []);
-
-  useEffect(() => {
     const loadResults = async () => {
       try {
         const response = await fetch('/api/results', { cache: 'no-store' });
@@ -125,73 +99,13 @@ export default function ItineraryPage() {
     loadExpenses();
   }, []);
 
-  useEffect(() => {
-    if (!participantNames.length) return;
-
-    if (splitMode === 'everyone') {
-      setExpenseForm((prev) => ({
-        ...prev,
-        splitAmong: participantNames
-      }));
-      return;
-    }
-
-    setExpenseForm((prev) => {
-      if (prev.splitAmong.length > 0) return prev;
-      return {
-        ...prev,
-        splitAmong: participantNames
-      };
-    });
-  }, [participantNames, splitMode]);
-
-  const toggleSplitMember = (name) => {
-    setExpenseForm((prev) => ({
-      ...prev,
-      splitAmong: prev.splitAmong.includes(name)
-        ? prev.splitAmong.filter((member) => member !== name)
-        : [...prev.splitAmong, name]
-    }));
-  };
-
-  const addCustomName = () => {
-    const trimmed = groupNameInput.trim();
-    if (!trimmed) return;
-
-    const next = Array.from(new Map([...customNames, trimmed].map((name) => [name.trim().toLowerCase(), name.trim()])).values());
-    setCustomNames(next);
-    localStorage.setItem('expense-names', JSON.stringify(next));
-    setGroupNameInput('');
-  };
-
-  const removeCustomName = (nameToRemove) => {
-    const next = customNames.filter((name) => name.trim().toLowerCase() !== nameToRemove.trim().toLowerCase());
-    setCustomNames(next);
-    localStorage.setItem('expense-names', JSON.stringify(next));
-  };
-
-  const submitExpense = async (event) => {
-    event.preventDefault();
+  const saveExpense = async (payload) => {
     setExpenseError('');
-
-    const splitAmong = splitMode === 'everyone' ? participantNames : expenseForm.splitAmong;
-    if (splitMode === 'everyone' && participantNames.length === 0) {
-      setExpenseError("Couldn't save that. Try again.");
-      return;
-    }
-
     try {
       const response = await fetch('/api/expenses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: expenseForm.id || undefined,
-          description: expenseForm.description,
-          amount: Number(expenseForm.amount),
-          paidBy: expenseForm.paidBy,
-          splitType: 'equal',
-          splitAmong
-        })
+        body: JSON.stringify(payload)
       });
 
       if (!response.ok) throw new Error('Expense save failed');
@@ -201,18 +115,11 @@ export default function ItineraryPage() {
         const withoutCurrent = prev.filter((item) => item.id !== data.expense.id);
         return [data.expense, ...withoutCurrent];
       });
-      setSplitMode('everyone');
-      setExpenseForm({
-        id: '',
-        description: '',
-        amount: '',
-        paidBy: '',
-        splitAmong: participantNames,
-        splitType: 'equal'
-      });
+      setEditingExpense(null);
     } catch (error) {
       console.error(error);
       setExpenseError("Couldn't save that. Try again.");
+      throw error;
     }
   };
 
@@ -349,119 +256,14 @@ export default function ItineraryPage() {
           subtitle="Who paid. Who owes. Sorted."
         />
 
-        <div className="split-members">
-          <div className="split-toggle">
-            <input
-              value={groupNameInput}
-              onChange={(event) => setGroupNameInput(event.target.value)}
-              placeholder="Add a name"
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  event.preventDefault();
-                  addCustomName();
-                }
-              }}
-            />
-            <button type="button" className="manage-add-btn" onClick={addCustomName}>
-              Add
-            </button>
-          </div>
-          {customNames.length ? (
-            <div className="split-chip-grid">
-              {customNames.map((name) => (
-                <button type="button" key={name} className="pill removable-pill" onClick={() => removeCustomName(name)} title="Remove">
-                  {name} ×
-                </button>
-              ))}
-            </div>
-          ) : null}
-        </div>
+        {expenseError ? <p className="error-message">{expenseError}</p> : null}
 
-        <hr className="expense-divider" />
-
-        <form className="expense-form" onSubmit={submitExpense}>
-          <div className="expense-grid stacked-fields">
-            <label>
-              Description
-              <input
-                value={expenseForm.description}
-                onChange={(event) => setExpenseForm((prev) => ({ ...prev, description: event.target.value }))}
-                placeholder="Grocery run, cellar door, that round nobody agreed to"
-                required
-              />
-            </label>
-            <label>
-              Amount (AUD)
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                value={expenseForm.amount}
-                onChange={(event) => setExpenseForm((prev) => ({ ...prev, amount: event.target.value }))}
-                placeholder="120"
-                required
-              />
-            </label>
-            <label>
-              Paid by
-              <input
-                list="participants"
-                value={expenseForm.paidBy}
-                onChange={(event) => setExpenseForm((prev) => ({ ...prev, paidBy: event.target.value }))}
-                placeholder="Name of whoever paid"
-                required
-              />
-              <datalist id="participants">
-                {participantNames.map((name) => (
-                  <option key={name} value={name} />
-                ))}
-              </datalist>
-            </label>
-          </div>
-
-          <div className="split-members split-among-block">
-            <p className="section-label">Split</p>
-            <div className="split-toggle">
-              <button
-                type="button"
-                className={`pill ${splitMode === 'everyone' ? 'selected' : ''}`}
-                onClick={() => setSplitMode('everyone')}
-              >
-                Everyone
-              </button>
-              <button
-                type="button"
-                className={`pill ${splitMode === 'select' ? 'selected' : ''}`}
-                onClick={() => setSplitMode('select')}
-              >
-                Specific people
-              </button>
-            </div>
-
-            {splitMode === 'select' ? (
-              participantNames.length ? (
-                <div className="split-chip-grid">
-                  {participantNames.map((name) => (
-                    <button
-                      type="button"
-                      key={name}
-                      className={`pill ${expenseForm.splitAmong.includes(name) ? 'selected' : ''}`}
-                      onClick={() => toggleSplitMember(name)}
-                    >
-                      {name}
-                    </button>
-                  ))}
-                </div>
-              ) : null
-            ) : null}
-          </div>
-
-          {expenseError ? <p className="error-message">{expenseError}</p> : null}
-
-          <button type="submit" className="submit-btn">
-            {expenseForm.id ? 'Update expense' : 'Add expense'}
-          </button>
-        </form>
+        <ExpenseForm
+          editingExpense={editingExpense}
+          onSave={saveExpense}
+          onCancelEdit={() => setEditingExpense(null)}
+          knownNames={participantNames}
+        />
 
         <div className="expenses-layout">
           <article className="expense-list-card">
@@ -487,23 +289,7 @@ export default function ItineraryPage() {
                           type="button"
                           className="expense-action-btn"
                           title="Edit"
-                          onClick={() => {
-                            const selected = new Set(expense.splitAmong || []);
-                            const allSelected =
-                              participantNames.length > 0 &&
-                              participantNames.every((name) => selected.has(name)) &&
-                              selected.size === participantNames.length;
-
-                            setSplitMode(allSelected ? 'everyone' : 'select');
-                            setExpenseForm({
-                              id: expense.id,
-                              description: expense.description,
-                              amount: String(expense.amount),
-                              paidBy: expense.paidBy,
-                              splitAmong: expense.splitAmong,
-                              splitType: 'equal'
-                            });
-                          }}
+                          onClick={() => setEditingExpense(expense)}
                         >
                           <span className="material-symbols-outlined">edit</span>
                         </button>

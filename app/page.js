@@ -44,7 +44,7 @@ export default function HomePage() {
 
   const selectOption = (key, value) => {
     if (disableInputs) return;
-    setForm((prev) => ({ ...prev, [key]: value }));
+    setForm((prev) => ({ ...prev, [key]: prev[key] === value ? '' : value }));
   };
 
   const jumpToSection = (key) => {

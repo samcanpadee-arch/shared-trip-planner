@@ -1554,6 +1554,17 @@ textarea:disabled,
   margin-bottom: 0.5rem;
 }
 
+.split-checkbox-list {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.split-fallback-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
 .group-members-label {
   font-size: 0.78rem;
   color: var(--text-soft);
