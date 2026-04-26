@@ -217,6 +217,15 @@ textarea {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+.option-choice {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.other-option-input {
+  width: 100%;
+}
+
 .option-card {
   width: 100%;
   text-align: left;
@@ -1499,6 +1508,17 @@ textarea:disabled,
   border: 1px solid #ede2d7;
   border-radius: 0.65rem;
   padding: 0.65rem;
+}
+
+.other-suggestions-list {
+  margin-top: 0.4rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.other-suggestion-item {
+  color: var(--text-soft);
+  font-size: 0.82rem;
 }
 
 @media (max-width: 980px) {

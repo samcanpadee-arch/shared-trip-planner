@@ -24,11 +24,17 @@ export async function POST(request) {
       name: body.name,
       hardConstraints: body.hardConstraints || '',
       fridayNight: body.fridayNight,
+      fridayNightOther: body.fridayNightOther || '',
       saturdayMorning: body.saturdayMorning,
+      saturdayMorningOther: body.saturdayMorningOther || '',
       saturdayLunch: body.saturdayLunch,
+      saturdayLunchOther: body.saturdayLunchOther || '',
       saturdayDrinks: body.saturdayDrinks,
+      saturdayDrinksOther: body.saturdayDrinksOther || '',
       saturdayNight: body.saturdayNight,
+      saturdayNightOther: body.saturdayNightOther || '',
       sundayRecovery: body.sundayRecovery,
+      sundayRecoveryOther: body.sundayRecoveryOther || '',
       submittedAt: new Date().toISOString()
     };
 

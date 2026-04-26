@@ -14,11 +14,17 @@ const initialForm = {
   name: '',
   hardConstraints: '',
   fridayNight: '',
+  fridayNightOther: '',
   saturdayMorning: '',
+  saturdayMorningOther: '',
   saturdayLunch: '',
+  saturdayLunchOther: '',
   saturdayDrinks: '',
+  saturdayDrinksOther: '',
   saturdayNight: '',
-  sundayRecovery: ''
+  saturdayNightOther: '',
+  sundayRecovery: '',
+  sundayRecoveryOther: ''
 };
 
 export default function HomePage() {
@@ -188,13 +194,25 @@ export default function HomePage() {
                       <SectionHeader icon={section.icon} title={section.title} subtitle={section.subtitle} hint="Pick one. You can change it later if you have a better idea." />
                       <div className="options-grid">
                         {section.options.map((option) => (
-                          <OptionCard
-                            key={option.id}
-                            option={option}
-                            isSelected={form[section.key] === option.id}
-                            onSelect={() => selectOption(section.key, option.id)}
-                            disabled={disableInputs}
-                          />
+                          <div key={option.id} className="option-choice">
+                            <OptionCard
+                              option={option}
+                              isSelected={form[section.key] === option.id}
+                              onSelect={() => selectOption(section.key, option.id)}
+                              disabled={disableInputs}
+                            />
+                            {option.id === 'other' && form[section.key] === 'other' ? (
+                              <input
+                                className="other-option-input"
+                                value={form[`${section.key}Other`] || ''}
+                                onChange={(event) =>
+                                  setForm((prev) => ({ ...prev, [`${section.key}Other`]: event.target.value }))
+                                }
+                                placeholder="What are you thinking?"
+                                disabled={disableInputs}
+                              />
+                            ) : null}
+                          </div>
                         ))}
                       </div>
                     </section>

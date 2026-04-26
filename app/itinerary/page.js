@@ -265,36 +265,49 @@ export default function ItineraryPage() {
           {votingSections.map((section) => {
             const sortedEntries = Object.entries(results?.tally?.[section.key] || {}).sort((a, b) => b[1] - a[1]);
             const totalVotes = sortedEntries.reduce((sum, [, count]) => sum + count, 0);
+            const sectionSuggestions = results?.otherSuggestions?.[section.key] || [];
 
             return (
               <article key={section.key} className="leaderboard-category">
                 <p className="section-label">{section.title}</p>
                 {totalVotes ? (
-                  <div className="leaderboard-options">
-                    {sortedEntries.map(([optionId, count], index) => {
-                      const optionLabel = section.options.find((option) => option.id === optionId)?.title || optionId;
-                      const percentage = Math.round((count / totalVotes) * 100);
-                      const isLeader = index === 0;
+                  <>
+                    <div className="leaderboard-options">
+                      {sortedEntries.map(([optionId, count], index) => {
+                        const optionLabel = section.options.find((option) => option.id === optionId)?.title || optionId;
+                        const percentage = Math.round((count / totalVotes) * 100);
+                        const isLeader = index === 0;
 
-                      return (
-                        <div key={optionId} className="leaderboard-option">
-                          <div className="leaderboard-row">
-                            <span>
-                              {optionLabel}
-                              {results?.finalResults?.[section.key] === optionId ? <span className="final-chip">Final</span> : null}
-                            </span>
-                            <small>
-                              {count} {count === 1 ? 'vote' : 'votes'}
-                            </small>
+                        return (
+                          <div key={optionId} className="leaderboard-option">
+                            <div className="leaderboard-row">
+                              <span>
+                                {optionLabel}
+                                {results?.finalResults?.[section.key] === optionId ? <span className="final-chip">Final</span> : null}
+                              </span>
+                              <small>
+                                {count} {count === 1 ? 'vote' : 'votes'}
+                              </small>
+                            </div>
+                            <div className="leaderboard-bar-track">
+                              <div className={`leaderboard-bar ${isLeader ? 'leader' : ''}`} style={{ width: `${percentage}%` }} />
+                            </div>
+                            {isLeader ? <span className="leaderboard-rank">🏆</span> : null}
                           </div>
-                          <div className="leaderboard-bar-track">
-                            <div className={`leaderboard-bar ${isLeader ? 'leader' : ''}`} style={{ width: `${percentage}%` }} />
-                          </div>
-                          {isLeader ? <span className="leaderboard-rank">🏆</span> : null}
-                        </div>
-                      );
-                    })}
-                  </div>
+                        );
+                      })}
+                    </div>
+                    {sectionSuggestions.length ? (
+                      <div className="other-suggestions-list">
+                        <p className="section-label">Other suggestions</p>
+                        {sectionSuggestions.map((suggestion, index) => (
+                          <p key={`${suggestion.name}-${suggestion.text}-${index}`} className="other-suggestion-item">
+                            {suggestion.name}: "{suggestion.text}"
+                          </p>
+                        ))}
+                      </div>
+                    ) : null}
+                  </>
                 ) : (
                   <p className="result-empty">Nobody has voted yet. Suspiciously quiet.</p>
                 )}
