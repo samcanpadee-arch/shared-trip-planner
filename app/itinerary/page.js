@@ -260,7 +260,7 @@ export default function ItineraryPage() {
       </section>
 
       <section className="vote-section standings-card">
-        <SectionHeader title="How the votes are looking" label="Live" icon="leaderboard" subtitle="Updated every time someone submits. Refresh for latest." />
+        <SectionHeader title="How the votes are looking" label="Live" icon="leaderboard" subtitle="Not live-live. Hit refresh to see the latest. Yes, you have to do it manually. It&apos;s a bucks trip not a Bloomberg terminal." />
         <div className="leaderboard-list">
           {votingSections.map((section) => {
             const sortedEntries = Object.entries(results?.tally?.[section.key] || {})
@@ -325,7 +325,7 @@ export default function ItineraryPage() {
 
       {results?.groupNotes?.length ? (
         <section className="vote-section standings-card">
-          <SectionHeader title="Notes from the group" label="Notes" icon="forum" subtitle="Things people flagged when they voted. Useful. Probably." />
+          <SectionHeader title="From the group" label="Notes" icon="forum" subtitle="Suggestions, flags, and opinions nobody asked for but everyone submitted anyway." />
           <div className="group-notes-list">
             {results.groupNotes.map((item, index) => (
               <article key={`${item.name}-${index}`} className="group-note-item">
@@ -346,7 +346,7 @@ export default function ItineraryPage() {
           title="Group expenses"
           label="Splitwise but worse"
           icon="receipt_long"
-          subtitle="Add costs as they happen. The maths is automatic. The complaints are manual."
+          subtitle="Who paid what. Who owes who. No spreadsheet required."
         />
 
         <div className="split-members">

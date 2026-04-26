@@ -4,8 +4,7 @@ export const accommodation = {
   name: 'Yarra Glen Airbnb Estate',
   dates: 'June 26 – June 28, 2026',
   address: 'TBC once shared',
-  note: "Address drops once it's confirmed. Until then, just trust the process and pack warm.",
-  description: 'The house is booked. This is where the weekend actually happens. Everything else is negotiable.',
+  description: "Booked. Everyone ends up here. That's all you need to know for now.",
   linkLabel: 'See the place',
   link: 'https://www.airbnb.com.au/rooms/1561866387856977252?source_impression_id=p3_1776992856_P3BRBi61hmW3JbmH',
   image:
@@ -237,7 +236,7 @@ export const votingSections = [
     key: 'saturdayDrinks',
     day: 'Saturday',
     title: 'Saturday afternoon drinks',
-    subtitle: 'Afternoon drinks. Not optional. Scope TBD.',
+    subtitle: 'Afternoon drinks are happening. The only vote is where.',
     icon: 'liquor',
     options: [
       {
