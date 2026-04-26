@@ -58,21 +58,20 @@ function AdminPageContent() {
     const normalizedName = name.trim().toLowerCase();
     const res = await fetch(`/api/admin/vote?name=${encodeURIComponent(normalizedName)}`, { method: 'DELETE', headers: adminHeaders });
     if (!res.ok) {
-      setAdminMessage(`Failed to delete ${name}. Check the secret is correct.`);
+      setAdminMessage(`Failed to delete ${name}.`);
       return;
     }
-    await loadResults();
-    setAdminMessage(`Deleted ${name}.`);
+    window.location.reload();
   };
 
   const clearAllVotes = async () => {
+    if (!window.confirm('Delete every single vote? This cannot be undone.')) return;
     const res = await fetch('/api/admin/vote?all=true', { method: 'DELETE', headers: adminHeaders });
     if (!res.ok) {
-      setAdminMessage('Failed to clear votes. Check the secret is correct.');
+      setAdminMessage('Failed to clear votes.');
       return;
     }
-    await loadResults();
-    setAdminMessage('Cleared all votes.');
+    window.location.reload();
   };
 
   const toggleVotingLock = async () => {
