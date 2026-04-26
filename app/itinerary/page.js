@@ -262,6 +262,19 @@ export default function ItineraryPage() {
 
       <section className="vote-section standings-card">
         <SectionHeader title="How the votes are looking" label="Live" icon="leaderboard" subtitle="Not live-live. Hit refresh to see the latest. Yes, you have to do it manually. It&apos;s a bucks trip not a Bloomberg terminal." />
+        {results?.voterNames?.length ? (
+          <div className="voter-roll">
+            <p className="section-label">Voted</p>
+            <div className="voter-chip-grid">
+              {results.voterNames.map((name) => (
+                <span key={name} className="voter-chip">
+                  <span className="material-symbols-outlined">check_circle</span>
+                  {name}
+                </span>
+              ))}
+            </div>
+          </div>
+        ) : null}
         <div className="leaderboard-list">
           {votingSections.map((section) => {
             const sortedEntries = Object.entries(results?.tally?.[section.key] || {})

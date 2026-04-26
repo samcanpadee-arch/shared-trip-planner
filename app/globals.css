@@ -1441,6 +1441,36 @@ textarea:disabled,
   padding: 1rem;
 }
 
+.voter-roll {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.voter-chip-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.voter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--surface-soft, #f5f2ee);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem 0.25rem 0.4rem;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.voter-chip .material-symbols-outlined {
+  font-size: 1rem;
+  color: var(--primary);
+}
+
 .leaderboard-list {
   display: grid;
   gap: 0.9rem;
