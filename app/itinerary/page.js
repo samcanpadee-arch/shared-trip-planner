@@ -346,17 +346,15 @@ export default function ItineraryPage() {
           title="Group expenses"
           label="Splitwise but worse"
           icon="receipt_long"
-          subtitle="Who paid what. Who owes who. No spreadsheet required."
+          subtitle="Who paid. Who owes. Sorted."
         />
 
         <div className="split-members">
-          <p className="section-label">Who&apos;s in the group?</p>
-          <p className="group-members-label">Group members</p>
           <div className="split-toggle">
             <input
               value={groupNameInput}
               onChange={(event) => setGroupNameInput(event.target.value)}
-              placeholder="Add anyone who needs to be included in expenses, even if they didn&apos;t vote."
+              placeholder="Add a name"
               onKeyDown={(event) => {
                 if (event.key === 'Enter') {
                   event.preventDefault();
@@ -376,15 +374,12 @@ export default function ItineraryPage() {
                 </button>
               ))}
             </div>
-          ) : (
-            <p>Add anyone who needs to be included in expenses, even if they didn&apos;t vote.</p>
-          )}
+          ) : null}
         </div>
 
         <hr className="expense-divider" />
 
         <form className="expense-form" onSubmit={submitExpense}>
-          <p className="section-label expense-form-label">New expense</p>
           <div className="expense-grid stacked-fields">
             <label>
               Description
@@ -425,7 +420,7 @@ export default function ItineraryPage() {
           </div>
 
           <div className="split-members split-among-block">
-            <p className="section-label">Split between</p>
+            <p className="section-label">Split</p>
             <div className="split-toggle">
               <button
                 type="button"
@@ -457,9 +452,7 @@ export default function ItineraryPage() {
                     </button>
                   ))}
                 </div>
-              ) : (
-                <p>Add anyone who needs to be included in expenses, even if they didn&apos;t vote.</p>
-              )
+              ) : null
             ) : null}
           </div>
 

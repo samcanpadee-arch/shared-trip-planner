@@ -7,7 +7,7 @@ export default function Footer() {
       </p>
       <p>
         <span className="material-symbols-outlined">local_bar</span>
-        Sam built this instead of using a group chat like a normal person.
+        Vote irresponsibly, plan responsibly.
       </p>
     </footer>
   );
