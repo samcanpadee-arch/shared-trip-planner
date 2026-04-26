@@ -1054,6 +1054,11 @@ main.page-shell > .vote-section {
   border-radius: 0.75rem;
 }
 
+.name-section,
+.vote-section {
+  scroll-margin-top: 5rem;
+}
+
 .name-section .field-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
