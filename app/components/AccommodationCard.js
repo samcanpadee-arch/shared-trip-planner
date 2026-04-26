@@ -25,7 +25,7 @@ export default function AccommodationCard({ accommodation }) {
           <strong>{accommodation.address}</strong>
         </div>
       </div>
-      <p className="hint">{accommodation.note}</p>
+      {accommodation.note ? <p className="hint">{accommodation.note}</p> : null}
     </article>
   );
 }

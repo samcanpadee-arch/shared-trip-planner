@@ -14,11 +14,17 @@ const initialForm = {
   name: '',
   hardConstraints: '',
   fridayNight: '',
+  fridayNightOther: '',
   saturdayMorning: '',
+  saturdayMorningOther: '',
   saturdayLunch: '',
+  saturdayLunchOther: '',
   saturdayDrinks: '',
+  saturdayDrinksOther: '',
   saturdayNight: '',
-  sundayRecovery: ''
+  saturdayNightOther: '',
+  sundayRecovery: '',
+  sundayRecoveryOther: ''
 };
 
 export default function HomePage() {
@@ -123,7 +129,7 @@ export default function HomePage() {
             <h2>Vihan&apos;s Yarra Valley Bucks Weekend</h2>
             <p>26–28 June 2026 · Yarra Glen · A very serious planning website for a deeply unserious weekend.</p>
             <p>Vote on the rough plan. Once things are confirmed, this becomes the one link for the whole weekend.</p>
-            <p className="micro-copy">If you&apos;re reading this, Sam finished building it instead of touching grass. Respect the dedication.</p>
+            <p className="micro-copy">Sam built this instead of using a group chat like a normal person.</p>
             <div className="hero-gallery">
               <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAOtbpPNDunp6x3CIsV00p0feXtMwD09UY3-DPx81Qdpj82fAx09o0q94XyDzk053sFMsJkAsY-C2hCuO8YZzwLz9fuFe1fWUta0a8d7TtLDcboKEcQwKX0GHvbB2IpONF1BIsB1RjSNYzLDaCUwq4ceyA4qb1WDAE7lkS-BG-oi_J1fhLI_ifpTFaNoBqEAaGqHIyLYSG20sm3b9j_BxKxj7vUDMc1XPUg5SKyUy0PJRfjP3Qjvk5GM2vacto0zez_k3FcCfEDf0" alt="Yarra valley estate" />
               <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6zVl9_IxBAVuPnEMbSeodLMBs-bnqy7DivYP9ssvdSwb944tFWxmbpbi27oe6NQDWtK2-3opyA5SjLETQ1KGXV0VVRkAFbBPh12OakncL62B_n51D1HsiJdY9f7bTdSlX4NpzeBmfjl4BqLxU2sDiKbyQGrjuX85xzr0F4rJJ9y3JdUhREMxR5TA1mYoYvnmfQ7Jo2GvC6bWSgr4Zye84JT6sSc2tOv5eCrdBgoOReoULEnZBQMVIweDjT_5OTPOcaCorxvLQYBw" alt="Vineyards" />
@@ -178,7 +184,7 @@ export default function HomePage() {
                           {section.day === 'Friday'
                             ? 'People are coming from work. Manage expectations. Bring snacks.'
                             : section.day === 'Saturday'
-                              ? 'This is the one. The whole trip is basically this day.'
+                              ? "The reason we're all here. Don't blow it before midday."
                               : 'Soft landing. Leave with your dignity mostly intact.'}
                         </p>
                       </div>
@@ -188,13 +194,25 @@ export default function HomePage() {
                       <SectionHeader icon={section.icon} title={section.title} subtitle={section.subtitle} hint="Pick one. You can change it later if you have a better idea." />
                       <div className="options-grid">
                         {section.options.map((option) => (
-                          <OptionCard
-                            key={option.id}
-                            option={option}
-                            isSelected={form[section.key] === option.id}
-                            onSelect={() => selectOption(section.key, option.id)}
-                            disabled={disableInputs}
-                          />
+                          <div key={option.id} className="option-choice">
+                            <OptionCard
+                              option={option}
+                              isSelected={form[section.key] === option.id}
+                              onSelect={() => selectOption(section.key, option.id)}
+                              disabled={disableInputs}
+                            />
+                            {option.id === 'other' && form[section.key] === 'other' ? (
+                              <input
+                                className="other-option-input"
+                                value={form[`${section.key}Other`] || ''}
+                                onChange={(event) =>
+                                  setForm((prev) => ({ ...prev, [`${section.key}Other`]: event.target.value }))
+                                }
+                                placeholder="What are you thinking?"
+                                disabled={disableInputs}
+                              />
+                            ) : null}
+                          </div>
                         ))}
                       </div>
                     </section>
@@ -211,8 +229,8 @@ export default function HomePage() {
 
               {status === 'success' && !isEditing ? (
                 <section className="inline-success">
-                  <h3>You&apos;re in, {form.name || 'legend'}.</h3>
-                  <p>Votes saved. The group thanks you for your participation in this extremely democratic process.</p>
+                  <h3>Das, you&apos;re locked in.</h3>
+                  <p>Votes saved. Vihan doesn&apos;t know it yet but his weekend is being democratically decided right now.</p>
                   <button
                     type="button"
                     className="revote-link"
@@ -233,6 +251,7 @@ export default function HomePage() {
         <div className="sticky-col">
           <ProgressCard
             form={form}
+            votingSections={votingSections}
             submitAttempted={submitAttempted}
             requiredKeys={requiredKeys}
             onJumpToSection={jumpToSection}

@@ -4,8 +4,7 @@ export const accommodation = {
   name: 'Yarra Glen Airbnb Estate',
   dates: 'June 26 – June 28, 2026',
   address: 'TBC once shared',
-  note: "Address drops once it's confirmed. Until then, just trust the process and pack warm.",
-  description: 'The house is booked. This is where the weekend actually happens. Everything else is negotiable.',
+  description: "Booked. Everyone ends up here. That's all you need to know for now.",
   linkLabel: 'See the place',
   link: 'https://www.airbnb.com.au/rooms/1561866387856977252?source_impression_id=p3_1776992856_P3BRBi61hmW3JbmH',
   image:
@@ -55,6 +54,12 @@ export const votingSections = [
         description: 'For when ambition dies on the drive up. No shame, just convenience.',
         meta: ['Friday evening', 'Pay individually'],
         vibe: 'Recovery mode'
+      },
+      {
+        id: 'other',
+        title: 'Something else',
+        description: 'Got a better idea? Drop it here.',
+        cost: null
       }
     ]
   },
@@ -138,6 +143,12 @@ export const votingSections = [
         meta: ['Time by enquiry', 'From approx. $45 pp'],
         vibe: 'Wildcard',
         link: 'https://yvap.com.au/corporate/'
+      },
+      {
+        id: 'other',
+        title: 'Something else',
+        description: 'Got a better idea? Drop it here.',
+        cost: null
       }
     ]
   },
@@ -212,6 +223,12 @@ export const votingSections = [
         meta: ['Pay individually'],
         vibe: 'Casual kings',
         link: 'https://yarravalleygrand.com.au/'
+      },
+      {
+        id: 'other',
+        title: 'Something else',
+        description: 'Got a better idea? Drop it here.',
+        cost: null
       }
     ]
   },
@@ -219,7 +236,7 @@ export const votingSections = [
     key: 'saturdayDrinks',
     day: 'Saturday',
     title: 'Saturday afternoon drinks',
-    subtitle: 'Afternoon drinks. Not optional. Scope TBD.',
+    subtitle: 'Afternoon drinks are happening. The only vote is where.',
     icon: 'liquor',
     options: [
       {
@@ -266,6 +283,12 @@ export const votingSections = [
         description: 'Regroup at base camp. Saves money, saves energy, saves face.',
         meta: ['Flexible', 'Free'],
         vibe: 'Recovery mode'
+      },
+      {
+        id: 'other',
+        title: 'Something else',
+        description: 'Got a better idea? Drop it here.',
+        cost: null
       }
     ]
   },
@@ -320,6 +343,12 @@ export const votingSections = [
         vibe: 'Night out',
         image:
           'https://lh3.googleusercontent.com/aida-public/AB6AXuDELENszvK8vbg4vXPD_ei24zwcphcQXXc7skWuGTbxPRULixL9cyf3EFQIEQlUGeo5vEd_XlVbUNa6kvKTW9gVRi_xKV2cvt2MHxhqiotv8FHj_ekbFwG9GXfhTdGdO8dIiOxB3c19jbixMZSSCbF4mmXUtBvwCSAQLtxd1OnJKmAjeL6kuBXCyUzlCSoc8JNjGQB2qS6KeeIH3Z6x54w6mO9nqN001OB1GapQe82Cwuhq8hvAPqEW_lmpK6-Mre-ku3J6CvlYT-w'
+      },
+      {
+        id: 'other',
+        title: 'Something else',
+        description: 'Got a better idea? Drop it here.',
+        cost: null
       }
     ]
   },
@@ -382,6 +411,12 @@ export const votingSections = [
         description: 'Skip the fanfare and reclaim Sunday afternoon. No judgement.',
         meta: ['Anytime'],
         vibe: 'Quiet exit'
+      },
+      {
+        id: 'other',
+        title: 'Something else',
+        description: 'Got a better idea? Drop it here.',
+        cost: null
       }
     ]
   }

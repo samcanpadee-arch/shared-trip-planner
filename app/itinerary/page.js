@@ -260,41 +260,60 @@ export default function ItineraryPage() {
       </section>
 
       <section className="vote-section standings-card">
-        <SectionHeader title="How the votes are looking" label="Live" icon="leaderboard" subtitle="Updated every time someone submits. Refresh for latest." />
+        <SectionHeader title="How the votes are looking" label="Live" icon="leaderboard" subtitle="Not live-live. Hit refresh to see the latest. Yes, you have to do it manually. It&apos;s a bucks trip not a Bloomberg terminal." />
         <div className="leaderboard-list">
           {votingSections.map((section) => {
-            const sortedEntries = Object.entries(results?.tally?.[section.key] || {}).sort((a, b) => b[1] - a[1]);
+            const sortedEntries = Object.entries(results?.tally?.[section.key] || {})
+              .filter(([optionId]) => optionId !== 'other')
+              .sort((a, b) => b[1] - a[1]);
             const totalVotes = sortedEntries.reduce((sum, [, count]) => sum + count, 0);
+            const sectionSuggestions = results?.otherSuggestions?.[section.key] || [];
 
             return (
               <article key={section.key} className="leaderboard-category">
                 <p className="section-label">{section.title}</p>
-                {totalVotes ? (
-                  <div className="leaderboard-options">
-                    {sortedEntries.map(([optionId, count], index) => {
-                      const optionLabel = section.options.find((option) => option.id === optionId)?.title || optionId;
-                      const percentage = Math.round((count / totalVotes) * 100);
-                      const isLeader = index === 0;
+                {totalVotes || sectionSuggestions.length ? (
+                  <>
+                    {totalVotes ? (
+                    <div className="leaderboard-options">
+                      {sortedEntries.map(([optionId, count], index) => {
+                        const optionLabel = section.options.find((option) => option.id === optionId)?.title || optionId;
+                        const percentage = Math.round((count / totalVotes) * 100);
+                        const isLeader = index === 0;
 
-                      return (
-                        <div key={optionId} className="leaderboard-option">
-                          <div className="leaderboard-row">
-                            <span>
-                              {optionLabel}
-                              {results?.finalResults?.[section.key] === optionId ? <span className="final-chip">Final</span> : null}
-                            </span>
-                            <small>
-                              {count} {count === 1 ? 'vote' : 'votes'}
-                            </small>
+                        return (
+                          <div key={optionId} className="leaderboard-option">
+                            <div className="leaderboard-row">
+                              <span>
+                                {optionLabel}
+                                {results?.finalResults?.[section.key] === optionId ? <span className="final-chip">Final</span> : null}
+                              </span>
+                              <small>
+                                {count} {count === 1 ? 'vote' : 'votes'}
+                              </small>
+                            </div>
+                            <div className="leaderboard-bar-track">
+                              <div className={`leaderboard-bar ${isLeader ? 'leader' : ''}`} style={{ width: `${percentage}%` }} />
+                            </div>
+                            {isLeader ? <span className="leaderboard-rank">🏆</span> : null}
                           </div>
-                          <div className="leaderboard-bar-track">
-                            <div className={`leaderboard-bar ${isLeader ? 'leader' : ''}`} style={{ width: `${percentage}%` }} />
-                          </div>
-                          {isLeader ? <span className="leaderboard-rank">🏆</span> : null}
-                        </div>
-                      );
-                    })}
-                  </div>
+                        );
+                      })}
+                    </div>
+                    ) : (
+                      <p className="result-empty">No standard option votes yet.</p>
+                    )}
+                    {sectionSuggestions.length ? (
+                      <div className="other-suggestions-list">
+                        <p className="section-label">💡 Suggested by the group</p>
+                        {sectionSuggestions.map((suggestion, index) => (
+                          <p key={`${suggestion.name}-${suggestion.text}-${index}`} className="other-suggestion-item">
+                            {suggestion.name}: "{suggestion.text}"
+                          </p>
+                        ))}
+                      </div>
+                    ) : null}
+                  </>
                 ) : (
                   <p className="result-empty">Nobody has voted yet. Suspiciously quiet.</p>
                 )}
@@ -306,7 +325,7 @@ export default function ItineraryPage() {
 
       {results?.groupNotes?.length ? (
         <section className="vote-section standings-card">
-          <SectionHeader title="Notes from the group" label="Notes" icon="forum" subtitle="Things people flagged when they voted. Useful. Probably." />
+          <SectionHeader title="From the group" label="Notes" icon="forum" subtitle="Suggestions, flags, and opinions nobody asked for but everyone submitted anyway." />
           <div className="group-notes-list">
             {results.groupNotes.map((item, index) => (
               <article key={`${item.name}-${index}`} className="group-note-item">
@@ -327,17 +346,15 @@ export default function ItineraryPage() {
           title="Group expenses"
           label="Splitwise but worse"
           icon="receipt_long"
-          subtitle="Add costs as they happen. The maths is automatic. The complaints are manual."
+          subtitle="Who paid. Who owes. Sorted."
         />
 
         <div className="split-members">
-          <p className="section-label">Who&apos;s in the group?</p>
-          <p className="group-members-label">Group members</p>
           <div className="split-toggle">
             <input
               value={groupNameInput}
               onChange={(event) => setGroupNameInput(event.target.value)}
-              placeholder="Add anyone who needs to be included in expenses, even if they didn&apos;t vote."
+              placeholder="Add a name"
               onKeyDown={(event) => {
                 if (event.key === 'Enter') {
                   event.preventDefault();
@@ -357,15 +374,12 @@ export default function ItineraryPage() {
                 </button>
               ))}
             </div>
-          ) : (
-            <p>Add anyone who needs to be included in expenses, even if they didn&apos;t vote.</p>
-          )}
+          ) : null}
         </div>
 
         <hr className="expense-divider" />
 
         <form className="expense-form" onSubmit={submitExpense}>
-          <p className="section-label expense-form-label">New expense</p>
           <div className="expense-grid stacked-fields">
             <label>
               Description
@@ -406,7 +420,7 @@ export default function ItineraryPage() {
           </div>
 
           <div className="split-members split-among-block">
-            <p className="section-label">Split between</p>
+            <p className="section-label">Split</p>
             <div className="split-toggle">
               <button
                 type="button"
@@ -438,9 +452,7 @@ export default function ItineraryPage() {
                     </button>
                   ))}
                 </div>
-              ) : (
-                <p>Add anyone who needs to be included in expenses, even if they didn&apos;t vote.</p>
-              )
+              ) : null
             ) : null}
           </div>
 

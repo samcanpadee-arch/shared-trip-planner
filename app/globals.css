@@ -217,6 +217,15 @@ textarea {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+.option-choice {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.other-option-input {
+  width: 100%;
+}
+
 .option-card {
   width: 100%;
   text-align: left;
@@ -856,15 +865,31 @@ th {
   align-items: center;
 }
 
-.progress-submit-btn {
-  margin-top: 0.9rem;
-  border: 0;
-  width: 100%;
-  background: var(--primary);
-  color: #fff;
-  border-radius: 0.7rem;
-  padding: 0.75rem 0.85rem;
-  font-weight: 700;
+.progress-selection {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.progress-selection small {
+  font-size: 0.7rem;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.progress-selection.is-done .material-symbols-outlined {
+  color: #c6ebce;
+}
+
+.progress-selection.is-empty {
+  color: #cdbeb5;
+}
+
+.progress-selection.is-empty small {
+  color: #cdbeb5;
+  font-size: 0.62rem;
 }
 
 .cheeky-tooltip {
@@ -1499,6 +1524,17 @@ textarea:disabled,
   border: 1px solid #ede2d7;
   border-radius: 0.65rem;
   padding: 0.65rem;
+}
+
+.other-suggestions-list {
+  margin-top: 0.4rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.other-suggestion-item {
+  color: var(--text-soft);
+  font-size: 0.82rem;
 }
 
 @media (max-width: 980px) {
