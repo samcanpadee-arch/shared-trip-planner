@@ -116,8 +116,8 @@ export const votingSections = [
       {
         id: 'sat-am-tennis',
         title: 'Yarra Glen Tennis Club',
-        description: 'Bring your own racquets, balls, and court shoes. Good for a casual knock around. Also worth noting that Vihan plays tennis twice a week, so this is technically a home game for him. Something to consider.',
-        cost: 'Free or minimal court fee',
+        description: "Bring racquets, balls, and court shoes. Classic. Respectable. Deeply unglamorous for a bucks weekend but we don't judge.",
+        cost: '$20/hour',
         timeConstraint: 'BYO gear -- racquets and balls',
         link: 'https://play.tennis.com.au/yarraglentennisclub',
         thumbnail: 'https://play.tennis.com.au/Library/yarraglentennisclub?command=Proxy&type=Images&currentFolder=%2f&fileName=Court+Hire+Photo.jpg&thumbnail=Court+Hire+Photo__427x320.jpg&cache=31536000',
