@@ -1035,8 +1035,25 @@ main.page-shell > .vote-section {
 }
 
 .name-section .field-grid {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  align-items: start;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.name-section .field-grid > label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.name-section .field-grid > label input {
+  width: 100%;
+  min-width: 0;
+}
+
+.name-section .field-hint {
+  grid-column: 1 / -1;
 }
 
 .day-divider {
@@ -1129,10 +1146,11 @@ main.page-shell > .vote-section {
 @media (max-width: 700px) {
   .name-section .field-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
-  .field-hint {
-    grid-column: auto;
+  .name-section .field-grid > label {
+    width: 100%;
   }
 
   main.page-shell > .hero-block,
