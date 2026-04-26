@@ -11,7 +11,7 @@ const tallyCategories = [
 ];
 
 function isAuthorized(request) {
-  const adminSecret = process.env.ADMIN_SECRET;
+  const adminSecret = process.env.NEXT_PUBLIC_ADMIN_SECRET;
   const provided = request.headers.get('x-admin-secret');
   return Boolean(adminSecret) && provided === adminSecret;
 }

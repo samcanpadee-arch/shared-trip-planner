@@ -56,13 +56,21 @@ function AdminPageContent() {
 
   const deleteVote = async (name) => {
     const normalizedName = name.trim().toLowerCase();
-    await fetch(`/api/admin/vote?name=${encodeURIComponent(normalizedName)}`, { method: 'DELETE', headers: adminHeaders });
+    const res = await fetch(`/api/admin/vote?name=${encodeURIComponent(normalizedName)}`, { method: 'DELETE', headers: adminHeaders });
+    if (!res.ok) {
+      setAdminMessage(`Failed to delete ${name}. Check the secret is correct.`);
+      return;
+    }
     await loadResults();
     setAdminMessage(`Deleted ${name}.`);
   };
 
   const clearAllVotes = async () => {
-    await fetch('/api/admin/vote?all=true', { method: 'DELETE', headers: adminHeaders });
+    const res = await fetch('/api/admin/vote?all=true', { method: 'DELETE', headers: adminHeaders });
+    if (!res.ok) {
+      setAdminMessage('Failed to clear votes. Check the secret is correct.');
+      return;
+    }
     await loadResults();
     setAdminMessage('Cleared all votes.');
   };
