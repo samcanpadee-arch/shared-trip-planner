@@ -4,10 +4,10 @@ const thumb = (url) =>
 export const accommodation = {
   label: 'Base camp',
   status: 'Locked in ✓',
-  name: 'The Meadow -- Yarra Valley Large Entertainer with Spa & Sauna',
+  name: 'The Meadow, Yarra Glen',
   dates: 'June 26 – June 28, 2026',
   address: '13 Symonds Street, Yarra Glen 3775',
-  description: 'Base camp for the weekend. Address is confirmed and details are coming. Just get there.',
+  description: 'Spa, sauna, big kitchen, good lawn. This is going to be a good one. 13 Symonds Street, Yarra Glen. Save it. Show up.',
   linkLabel: 'Booking.com listing',
   link: 'https://www.booking.com/hotel/au/the-meadow-yarra-valley-large-entertainer-with-spa-sauna.en-gb.html',
   image:
@@ -30,7 +30,7 @@ export const votingSections = [
         cost: 'Shared grocery cost',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://tse1.explicit.bing.net/th/id/OIP.t74QJoWjW0wTkYj5tETpEQHaEy?rs=1&pid=ImgDetMain&o=7&rm=3',
+        thumbnail: null,
       },
       {
         id: 'fri-bbq',
@@ -39,7 +39,7 @@ export const votingSections = [
         cost: 'Shared grocery cost',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://tse3.mm.bing.net/th/id/OIP.e9erSNNQrd1vykMyz-igRwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3',
+        thumbnail: null,
       },
       {
         id: 'fri-takeaway',
@@ -48,7 +48,7 @@ export const votingSections = [
         cost: 'Pay individually',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://static.vecteezy.com/system/resources/previews/060/562/387/non_2x/delicious-asian-takeout-meal-noodles-salad-crispy-chicken-in-boxes-soft-light-blurred-background-free-photo.jpg',
+        thumbnail: null,
       },
       {
         id: 'other',
@@ -73,7 +73,7 @@ export const votingSections = [
         title: 'Clay shooting (public session)',
         description: "You get a gun, clay targets, and one chance to pretend you've done this before. Zero alcohol beforehand is non-negotiable, which is quite the commitment given the night before. Closed shoes, no camo, no singlets. It's also cursed early.",
         cost: '~$80.50 pp',
-        timeConstraint: 'Arrive 8:45am sharp -- no exceptions',
+        timeConstraint: 'Arrive 8:45am sharp. No exceptions.',
         link: 'https://www.melbournegunclub.com/come-and-try/',
         thumbnail: thumb('https://www.melbournegunclub.com/come-and-try/'),
       },
@@ -93,11 +93,11 @@ export const votingSections = [
         cost: 'Free',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://tse3.mm.bing.net/th/id/OIP.2LYjVcmAzMwNUCZfAMJlfAHaEk?rs=1&pid=ImgDetMain&o=7&rm=3',
+        thumbnail: null,
       },
       {
         id: 'sat-am-walk',
-        title: 'Short walk -- Badger Weir',
+        title: 'Short walk to Badger Weir',
         description: 'Badger Weir Picnic Area near Healesville. Easy 2.5km loop through mountain ash forest. No gear required.',
         cost: 'Free',
         timeConstraint: null,
@@ -118,7 +118,7 @@ export const votingSections = [
         title: 'Yarra Glen Tennis Club',
         description: "Bring racquets, balls, and court shoes. Classic. Respectable. Deeply unglamorous for a bucks weekend but we don't judge.",
         cost: '$20/hour',
-        timeConstraint: 'BYO gear -- racquets and balls',
+        timeConstraint: 'BYO gear: racquets and balls.',
         link: 'https://play.tennis.com.au/yarraglentennisclub',
         thumbnail: 'https://play.tennis.com.au/Library/yarraglentennisclub?command=Proxy&type=Images&currentFolder=%2f&fileName=Court+Hire+Photo.jpg&thumbnail=Court+Hire+Photo__427x320.jpg&cache=31536000',
       },
@@ -178,7 +178,7 @@ export const votingSections = [
       },
       {
         id: 'sat-lunch-debortoli',
-        title: 'De Bortoli -- Locale restaurant',
+        title: 'De Bortoli, Locale restaurant',
         description: 'Full restaurant experience on the estate. Better for a proper lunch than a tasting crawl.',
         cost: null,
         timeConstraint: null,
@@ -200,7 +200,7 @@ export const votingSections = [
     key: 'saturdayDrinks',
     day: 'Saturday',
     title: 'Saturday arvo',
-    subtitle: 'Afternoon options -- not all of them are drinking, but some of them are. Distillery tour, brewery, more tastings, or just heading back to the house earlier. Pick what fits the day.',
+    subtitle: 'Afternoon options. Not all of them are drinking, but some of them are. Distillery tour, brewery, more tastings, or just heading back to the house earlier. Pick what fits the day.',
     icon: 'liquor',
     options: [
       {
@@ -208,7 +208,7 @@ export const votingSections = [
         title: 'Four Pillars Gin',
         description: 'Healesville distillery. Guided tasting experience, about 55 mins. Hourly sessions from 12pm on weekends.',
         cost: '~$50 pp',
-        timeConstraint: 'Hourly sessions -- needs to be booked in advance',
+        timeConstraint: 'Hourly sessions. Needs to be booked in advance.',
         link: 'https://fourpillarsgin.com/pages/visit-our-distillery',
         thumbnail: 'https://fourpillarsgin.com/cdn/shop/files/FPGSignage_hdavison_3275_10a1d187-784a-459c-a07c-b44023634e5f.webp?v=1703199456&width=750',
       },
@@ -263,13 +263,13 @@ export const votingSections = [
     key: 'saturdayNight',
     day: 'Saturday',
     title: 'Saturday night',
-    subtitle: "The back nine. Dinner at the house, keep the night going. We've got a good spot -- may as well use it properly.",
+    subtitle: "The back nine. Dinner at the house, keep the night going. We've got a good spot, so we may as well use it properly.",
     icon: 'local_bar',
     options: [
       {
         id: 'sat-night-pizza',
         title: 'Pizza oven night',
-        description: 'Only valid if we did BBQ on Friday. Same deal -- everyone helps, nobody supervises from a distance with a beer.',
+        description: 'Only valid if we did BBQ on Friday. Same deal: everyone helps, nobody supervises from a distance with a beer.',
         cost: 'Shared grocery cost',
         timeConstraint: null,
         link: null,
@@ -291,7 +291,7 @@ export const votingSections = [
         cost: 'Shared grocery cost',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://tse3.mm.bing.net/th/id/OIP.e9erSNNQrd1vykMyz-igRwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3',
+        thumbnail: null,
       },
       {
         id: 'sat-night-takeaway',
@@ -300,7 +300,7 @@ export const votingSections = [
         cost: 'Pay individually or split',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://static.vecteezy.com/system/resources/previews/060/562/387/non_2x/delicious-asian-takeout-meal-noodles-salad-crispy-chicken-in-boxes-soft-light-blurred-background-free-photo.jpg',
+        thumbnail: null,
       },
       {
         id: 'other',
@@ -345,14 +345,14 @@ export const votingSections = [
         cost: '$14-$29 pp depending on activity',
         timeConstraint: null,
         link: 'https://www.maroondahgolfpark.com.au/',
-        thumbnail: 'https://images.squarespace-cdn.com/content/v1/658e5e5805acd37df4c4cf0a/b309544e-05d2-4f79-9c17-7f6249ce895c/YARRARANGESTOURISM1.jpeg?format=1000w',
+        thumbnail: thumb('https://www.maroondahgolfpark.com.au/'),
       },
       {
         id: 'sun-tennis',
         title: 'Yarra Glen Tennis Club',
         description: 'BYO racquets and balls. Not provided. This is a very specific reminder.',
         cost: 'Free or minimal court fee',
-        timeConstraint: 'BYO gear -- racquets and balls',
+        timeConstraint: 'BYO gear: racquets and balls.',
         link: 'https://play.tennis.com.au/yarraglentennisclub',
         thumbnail: 'https://play.tennis.com.au/Library/yarraglentennisclub?command=Proxy&type=Images&currentFolder=%2f&fileName=Court+Hire+Photo.jpg&thumbnail=Court+Hire+Photo__427x320.jpg&cache=31536000',
       },
@@ -372,7 +372,7 @@ export const votingSections = [
         cost: 'Free',
         timeConstraint: null,
         link: null,
-        thumbnail: 'https://i.imgflip.com/6l39ya.jpg',
+        thumbnail: null,
       },
       {
         id: 'other',
@@ -389,33 +389,33 @@ export const votingSections = [
 
 export const itineraryTimeline = [
   {
-    day: 'Friday',
+    day: 'Friday. Get there.',
     entries: [
-      { time: 'From 3pm', title: 'Arrive + settle in', note: 'Airbnb is open. First drink is imminent. Everything else figures itself out.', status: 'set' },
-      { time: 'Evening', title: 'Friday dinner', note: 'TBC based on votes. Either way, someone will be late and that\'s on them.', status: 'pending' }
+      { time: 'From 3:00 PM', title: 'Arrive. Find a room. First drink happens.', note: "Check-in at 3:00 PM. Don't be the guy who shows up early and expects a tour.", status: 'set' },
+      { time: 'Evening', title: 'Group dinner (TBC)', note: "TBC based on votes. Either way, someone will be late and that's on them.", status: 'pending' }
     ]
   },
   {
-    day: 'Saturday',
+    day: 'Saturday. The main event.',
     entries: [
-      { time: 'Morning', title: 'Morning activity', note: 'TBC. Dress for it. Show up.', status: 'pending' },
-      { time: 'Lunch', title: 'Winery lunch', note: 'TBC. Somewhere with good wine and enough food to absorb Saturday morning.', status: 'pending' },
+      { time: 'Morning', title: 'Breakfast at the house.', note: 'Start with food and a strong coffee before anything ambitious.', status: 'pending' },
+      { time: 'Lunch', title: 'Winery tour & long lunch', note: 'TBC. Somewhere with good wine and enough food to absorb Saturday morning.', status: 'pending' },
       { time: 'Afternoon', title: 'Afternoon plans', note: 'TBC. See the vote page. Try to keep it together.', status: 'pending' },
       { time: 'Evening', title: 'Saturday dinner', note: 'TBC. The house is good. We\'re staying in it.', status: 'pending' }
     ]
   },
   {
-    day: 'Sunday',
+    day: 'Sunday. Recovery.',
     entries: [
-      { time: 'Morning', title: 'Recovery activity', note: 'Recovery activity TBC. Then everyone slowly disappears home.', status: 'pending' }
+      { time: 'Morning', title: 'Recovery brunch (TBC)', note: 'Likely if morale allows.', status: 'pending' }
     ]
   }
 ];
 
 export const essentialsChecklist = [
   'Warm layers. Yarra Valley in June will humble you.',
-  'Phone charger and a portable one because you will forget',
-  "Sleeping bag if you want your own warmth situation. The alternative is a group cuddle and that's your call.",
+  'Phone charger and a portable one because you will forget.',
+  'Sleeping bag if you want your own warmth situation. The alternative is a group cuddle and that is entirely on you.',
   'Electrolytes. Trust.',
   'Something to contribute to the house. Snacks, drinks, whatever.',
   'Low expectations for sleep, high expectations for everything else.',

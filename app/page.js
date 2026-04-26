@@ -34,6 +34,8 @@ export default function HomePage() {
   const [error, setError] = useState('');
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [votingLocked, setVotingLocked] = useState(false);
+  const [voteSummary, setVoteSummary] = useState({ voterCount: 0, voterNames: [] });
+  const [shareLabel, setShareLabel] = useState('Share this page');
 
   const requiredKeys = useMemo(
     () => ['name', 'fridayNight', 'saturdayMorning', 'saturdayLunch', 'saturdayDrinks', 'saturdayNight', 'sundayRecovery'],
@@ -61,9 +63,19 @@ export default function HomePage() {
       if (!response.ok) return;
       const data = await response.json();
       setVotingLocked(Boolean(data?.votingLocked));
-    } catch (configError) {
-      console.error(configError);
-    }
+    } catch (configError) {}
+  };
+
+  const fetchResults = async () => {
+    try {
+      const response = await fetch('/api/results', { cache: 'no-store' });
+      if (!response.ok) return;
+      const data = await response.json();
+      setVoteSummary({
+        voterCount: Number(data?.voterCount || 0),
+        voterNames: Array.isArray(data?.voterNames) ? data.voterNames : []
+      });
+    } catch (resultsError) {}
   };
 
   useEffect(() => {
@@ -77,7 +89,26 @@ export default function HomePage() {
     }
 
     fetchConfig();
+    fetchResults();
   }, []);
+
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "Vihan's Yarra Valley Bucks Weekend",
+          url: window.location.href
+        });
+        return;
+      }
+
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(window.location.href);
+        setShareLabel('Link copied');
+        window.setTimeout(() => setShareLabel('Share this page'), 2000);
+      }
+    } catch (shareError) {}
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -128,8 +159,12 @@ export default function HomePage() {
             <p className="section-label">The planning website nobody asked for</p>
             <h2>Vihan&apos;s Yarra Valley Bucks Weekend</h2>
             <p>26–28 June 2026 · Yarra Glen · A very serious planning website for a deeply unserious weekend.</p>
-            <p>Vote on the rough plan. Once things are confirmed, this becomes the one link for the whole weekend.</p>
+            <p>Vote on the rough plan now. Once things are locked in, this becomes the one link for the whole trip. Itinerary, address, timings, all of it.</p>
             <p className="micro-copy">Sam built this instead of using a group chat like a normal person.</p>
+            <button type="button" className="hero-share-btn" onClick={handleShare}>
+              <span className="material-symbols-outlined">share</span>
+              {shareLabel}
+            </button>
             <div className="hero-gallery">
               <img
                 src="https://raw.githubusercontent.com/samcanpadee-arch/vihan-bucks-weekend/refs/heads/main/assets/images/vihan-therewillbeblood.webp"
@@ -137,6 +172,12 @@ export default function HomePage() {
               />
             </div>
           </section>
+
+          {voteSummary.voterCount > 0 ? (
+            <p className="votes-in-pill">
+              {voteSummary.voterCount} {voteSummary.voterCount === 1 ? 'vote' : 'votes'} in: {voteSummary.voterNames.join(', ')}
+            </p>
+          ) : null}
 
           <AccommodationCard accommodation={accommodation} />
 
@@ -187,7 +228,7 @@ export default function HomePage() {
                     ) : null}
 
                     <section className="vote-section" id={`section-${section.key}`}>
-                      <SectionHeader icon={section.icon} title={section.title} subtitle={section.subtitle} hint="Pick one. You can change it later if you have a better idea." />
+                      <SectionHeader icon={section.icon} title={section.title} subtitle={section.subtitle} hint="Pick one." />
                       <div className="options-grid">
                         {section.options.map((option) => (
                           <div key={option.id} className="option-choice">

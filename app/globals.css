@@ -17,11 +17,6 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  overflow-x: hidden;
-}
-
 body {
   margin: 0;
   background: var(--surface);
@@ -229,48 +224,6 @@ textarea {
 
 .other-option-input {
   width: 100%;
-}
-
-.option-card {
-  width: 100%;
-  text-align: left;
-  padding: 1rem;
-  cursor: pointer;
-  display: grid;
-  gap: 0.7rem;
-}
-
-.option-card.selected {
-  border-color: var(--primary);
-  background: #fff;
-  box-shadow: 0 10px 24px rgba(6, 27, 14, 0.13);
-}
-
-.option-card p {
-  color: var(--text-soft);
-}
-
-.option-meta {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-}
-
-.chip {
-  display: inline-flex;
-  border-radius: 999px;
-  padding: 0.25rem 0.55rem;
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  border: 1px solid #d7cbc3;
-  background: #f3eae5;
-}
-
-.chip-accent {
-  background: var(--secondary);
-  color: #fff;
-  border: 0;
 }
 
 .pill-grid {
@@ -637,26 +590,6 @@ th {
   object-fit: cover;
 }
 
-.option-card {
-  background: #fff;
-  border: 1px solid #e6dacf;
-  border-radius: 0.8rem;
-  box-shadow: 0 8px 20px rgba(27, 48, 34, 0.07);
-}
-
-.option-image-wrap {
-  height: 140px;
-  margin: -1rem -1rem 0.2rem;
-  overflow: hidden;
-  border-radius: 0.8rem 0.8rem 0 0;
-}
-
-.option-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .progress-card {
   border-radius: 0.9rem;
   border: 1px solid #314e3b;
@@ -673,14 +606,6 @@ th {
 }
 
 /* Consistent chip/bubble alignment */
-.option-card {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  height: 100%;
-  gap: 0.7rem;
-}
-
 .option-meta {
   display: flex;
   flex-wrap: wrap;
@@ -704,6 +629,7 @@ th {
   align-items: center;
   justify-content: center;
   min-height: 1.7rem;
+  line-height: 1.25;
   padding: 0.28rem 0.7rem;
   border-radius: 999px;
   font-size: 0.7rem;
@@ -713,7 +639,7 @@ th {
   border: 1px solid #d7cbc3;
   background: #f3eae5;
   color: #36423a;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .chip-accent {
@@ -780,32 +706,6 @@ th {
 .accommodation-description {
   color: var(--text-soft);
   margin: 0.4rem 0 0.8rem;
-}
-
-.option-card {
-  height: 100%;
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-  box-shadow: 0 8px 20px rgba(27, 48, 34, 0.07);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.option-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(27, 48, 34, 0.13);
-}
-
-.option-card.selected {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(6, 27, 14, 0.2), 0 16px 34px rgba(27, 48, 34, 0.16);
-}
-
-.option-card p {
-  font-style: italic;
-}
-
-.option-image-wrap {
-  height: 140px;
 }
 
 .option-link {
@@ -1090,17 +990,32 @@ main.page-shell > .vote-section {
 
 .option-card {
   position: relative;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 20px rgba(27, 48, 34, 0.07);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
   padding: 1rem 1rem 1.1rem;
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
+  height: 100%;
+  overflow: hidden;
+}
+
+.option-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(27, 48, 34, 0.13);
 }
 
 .option-card.selected {
   border: 2px solid var(--primary);
   border-left: 3px solid var(--primary);
   background: #eef4ef;
-  box-shadow: 0 8px 24px rgba(27, 48, 34, 0.12);
+  box-shadow: 0 0 0 2px rgba(6, 27, 14, 0.2), 0 16px 34px rgba(27, 48, 34, 0.16);
 }
 
 .option-copy p {
@@ -1585,10 +1500,6 @@ textarea:disabled,
 }
 
 
-.option-card {
-  overflow: hidden;
-}
-
 .option-cost-chip {
   max-width: 100%;
   overflow: hidden;
@@ -1684,6 +1595,11 @@ textarea:disabled,
   .itinerary-top-grid {
     gap: 0.8rem;
   }
+
+  .option-chip-row .chip {
+    width: auto;
+    max-width: 100%;
+  }
 }
 
 
@@ -1709,9 +1625,41 @@ textarea:disabled,
 }
 
 .chip-time {
+  text-align: center;
   background: #fef3c7;
   color: #92400e;
   font-weight: 600;
   text-transform: none;
   letter-spacing: normal;
+}
+
+.hero-share-btn {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--primary);
+  background: #fff;
+  color: var(--primary);
+  border-radius: 0.55rem;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hero-share-btn .material-symbols-outlined {
+  font-size: 0.95rem;
+}
+
+.votes-in-pill {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #d7cbc3;
+  border-radius: 999px;
+  background: #f3eae5;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.78rem;
+  color: var(--text-soft);
 }
