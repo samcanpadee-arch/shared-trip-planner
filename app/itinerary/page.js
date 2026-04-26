@@ -13,6 +13,7 @@ export default function ItineraryPage() {
   const [expenses, setExpenses] = useState([]);
   const [customNames, setCustomNames] = useState([]);
   const [groupNameInput, setGroupNameInput] = useState('');
+  const [showNameManager, setShowNameManager] = useState(false);
   const [expensesLoading, setExpensesLoading] = useState(true);
   const [expenseError, setExpenseError] = useState('');
   const [splitMode, setSplitMode] = useState('everyone');
@@ -349,36 +350,6 @@ export default function ItineraryPage() {
           subtitle="Who paid. Who owes. Sorted."
         />
 
-        <div className="split-members">
-          <div className="split-toggle">
-            <input
-              value={groupNameInput}
-              onChange={(event) => setGroupNameInput(event.target.value)}
-              placeholder="Add a name"
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  event.preventDefault();
-                  addCustomName();
-                }
-              }}
-            />
-            <button type="button" className="manage-add-btn" onClick={addCustomName}>
-              Add
-            </button>
-          </div>
-          {customNames.length ? (
-            <div className="split-chip-grid">
-              {customNames.map((name) => (
-                <button type="button" key={name} className="pill removable-pill" onClick={() => removeCustomName(name)} title="Remove">
-                  {name} ×
-                </button>
-              ))}
-            </div>
-          ) : null}
-        </div>
-
-        <hr className="expense-divider" />
-
         <form className="expense-form" onSubmit={submitExpense}>
           <div className="expense-grid stacked-fields">
             <label>
@@ -542,6 +513,55 @@ export default function ItineraryPage() {
             )}
           </article>
         </div>
+
+        {!showNameManager ? (
+          <button
+            type="button"
+            className="name-manager-toggle"
+            onClick={() => setShowNameManager(true)}
+          >
+            Someone not showing up in the list?
+          </button>
+        ) : (
+          <div className="split-members name-manager-open">
+            <p className="section-label">Add someone manually</p>
+            <p className="fine-print">
+              Names from voters and expenses are added automatically.
+              Only use this if someone is genuinely missing.
+            </p>
+            <div className="split-toggle">
+              <input
+                value={groupNameInput}
+                onChange={(event) => setGroupNameInput(event.target.value)}
+                placeholder="Add a name"
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault();
+                    addCustomName();
+                  }
+                }}
+              />
+              <button type="button" className="manage-add-btn" onClick={addCustomName}>
+                Add
+              </button>
+            </div>
+            {customNames.length ? (
+              <div className="split-chip-grid">
+                {customNames.map((name) => (
+                  <button
+                    type="button"
+                    key={name}
+                    className="pill removable-pill"
+                    onClick={() => removeCustomName(name)}
+                    title="Remove"
+                  >
+                    {name} ×
+                  </button>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        )}
       </section>
 
       <Footer />

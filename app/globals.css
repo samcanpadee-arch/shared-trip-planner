@@ -1232,6 +1232,28 @@ main.page-shell > .vote-section {
   border-top: 1px solid var(--border);
 }
 
+.name-manager-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-soft);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.name-manager-toggle:hover {
+  color: var(--text);
+}
+
+.name-manager-open {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--surface-soft, #f5f2ee);
+  border-radius: 8px;
+}
+
 .expense-form-label {
   margin-bottom: 0.2rem;
 }
