@@ -1010,6 +1010,34 @@ main.page-shell > .vote-section {
   color: #e4bc6a;
 }
 
+.property-guide-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+}
+
+.property-guide-card h3 {
+  margin: 0.2rem 0 0.5rem;
+}
+
+.property-guide-card p:not(.section-label) {
+  color: var(--text-soft);
+  max-width: 62rem;
+}
+
+.property-guide-button {
+  text-decoration: none;
+}
+
+@media (min-width: 701px) {
+  .property-guide-button {
+    width: fit-content;
+  }
+}
+
 .site-footer {
   margin-top: 2rem;
   padding: 1.1rem;

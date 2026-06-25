@@ -604,6 +604,23 @@ export default function ItineraryPage() {
         </aside>
       </section>
 
+      <section className="vote-section property-guide-card">
+        <p className="section-label">Base camp</p>
+        <h3>Property guide</h3>
+        <p>
+          Everything you need to know about The Meadow -- check-in instructions, WiFi, the spa and sauna, house rules, and local tips -- is in the host&apos;s digital guide.
+        </p>
+        <a
+          href="https://guide.touchstay.com/guest/bRC8WsxEf2exw/"
+          target="_blank"
+          rel="noopener"
+          className="submit-btn property-guide-button"
+        >
+          Open property guide
+          <span className="material-symbols-outlined">open_in_new</span>
+        </a>
+      </section>
+
       {confirmedActivities.length > 0 ? (
         <section className="vote-section confirmed-plan-section">
           <SectionHeader
